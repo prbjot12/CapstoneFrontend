@@ -1,10 +1,16 @@
+<?php
+require('sqlconnection.php');
+$connection = new DatabaseConnection();
+$results = $connection->get_vehicles();
+?>
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Wheels On Deals</title>
+    <title>Wheels On Deals - VIN Report</title>
 
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,6 +46,7 @@
                                 <li>
                                     <a href="about-us.php">About</a>
                                 </li>
+
                                 <li><a class="nav-link" href="contact.php">Contact Us</a></li>
                                 <li><a class="nav-link" href="quotation.php">Quotation</a></li>
                                 <li><a class="nav-link" href="adminlogin.php">Admin</a></li>
@@ -50,21 +57,42 @@
             </div>
         </header>
     </div>
-    <div class="card">
-        <form id="loginuser" method="post" action="checkadminlogin.php">
-            <h3 class="title">Admin Portal Log in</h3>
-            <p class="subtitle">Don't have an account? <a href="adminsignup.php"> sign Up</a></p>
-
-            <div class="email-login">
-                <label for="email"> <b>Email</b></label>
-                <input type="text" placeholder="Enter Email" name="email" id="email">
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="password" id="password">
-            </div>
-            <button class="cta-btn" type="submit" onclick="Login(event)">Log In</button>
-            <a class="forget-pass" href="#">Forgot password?</a>
+    <div class="pageWrapper">
+        <div class="addnewcard" id="selectvehicle">
+            <form>
+                <h3 class="title">Select A Vehicle To Generate Report</h3>
+                <h6 class="subtitle">Powerd by <a href='https://www.nhtsa.gov' target="_blank">https://www.nhtsa.gov/</a></h6>
+                <div class="email-login">
+                    <label for="Vehicle"> <b>Vehicle</b></label>
+                    <select id="Vehicle" name="Vehicle">
+                        <?php
+                        $sr_no = 0;
+                        while ($row = mysqli_fetch_array($results, MYSQLI_ASSOC)) {
+                            $sr_no++;
+                            $str_to_print = "";
+                            $str_to_print .= "<option value='vehicleid_{$row['Vehicle_Id']}' id='vehicleid_{$row['Vehicle_Id']}' data-brand='{$row['Brand']}' data-vehicletype='{$row['Vehicle_Type']}' data-model='{$row['Model']}' data-manufacturedate='{$row['ManufactureDate']}' data-price='{$row['Price']}' data-vin='{$row['VIN']}'>{$row['Brand']} - {$row['Model']}</option>";
+                            echo $str_to_print;
+                        }
+                        ?>
+                    </select>
+                </div>
+                <button class="cta-btn" type="submit" onclick="getvindetails(event)">Get VIN Report</button>
             </form>
+        </div>
+        <div class="vinnewcard" id="quotationsummary">
+            <form>
+                <h3 class="title">Quotation Summary</h3>
+                <h6 class="subtitle">Powerd by <a href='https://www.nhtsa.gov' target="_blank">https://www.nhtsa.gov/</a></h6>
+                <div class="quotationdetailswrapper">
+                    <dl id="vinreport">
+
+                    </dl>
+                </div>
+                <button class="cta-btn" onclick="window.location.reload()">Get a new Report</button>
+            </form>
+        </div>
     </div>
+
     <footer>
         <div class="container">
             <div class="row">
@@ -134,24 +162,41 @@
     </script>
 
     <script src="js/vendor/bootstrap.min.js"></script>
-
     <script src="js/datepicker.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
+    <input type="hidden" id="vehicleId" value="" />
     <script>
-        function Login(event) {
+        function getvindetails(event) {
             event.preventDefault();
-            const Email = $('#email').val()
-            const Password = $('#password').val()
+            const VehicleId = $('#Vehicle').val()
+            if (Vehicle) {
+                const cardetailselement = $(`#${VehicleId}`)
+                const VIN = cardetailselement.data('vin')
 
-            if (Email !== '' && Password !== '') {
-                if (String(Email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-                        $('#loginuser').submit();
-                } else {
-                    alert('Invalid EmailID !!!!')
-                }
+                fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/decodevinextended/${VIN}?format=json`)
+                    .then((response) => response.json())
+                    .then((response) => {
+                        if (response.Count > 0) {
+                            const results = [...response.Results]
+                            let resultstr = '';
+                            results.forEach((result) => {
+                                if (result.Value && result.Value !== '0') {
+                                    resultstr += `<div class="quotationdetails">
+                                                <dt>${result.Variable}</dt>
+                                                <dd>${result.Value}</dd>
+                                             </div>`
+                                }
+                            })
+                            $('#vinreport').html(resultstr)
+                            $('#selectvehicle').fadeOut()
+                            $('#quotationsummary').fadeIn()
+                        }
+                    })
+
+
             } else {
-                alert('Please enter all details to proceed further !!!')
+                alert('Please select a vehicle to proceed further !!!');
             }
         }
     </script>

@@ -33,15 +33,14 @@
                         <nav id="primary-nav" class="dropdown cf">
                             <ul class="dropdown menu">
                                 <li><a href="index.html">Home</a></li>
-
-                                <li><a href="cars.html">Cars</a></li>
-
+                                <li><a href="vinreport.php">VIN Checker</a></li>
                                 <li>
                                     <a href="about-us.php">About</a>
                                 </li>
 
-                                <li class='active'><a class="nav-link" href="about.php">Contact Us</a></li>
-                                <li class='active'><a class="nav-link" href="adminlogin.php">Admin</a></li>
+                                <li><a class="nav-link" href="contact.php">Contact Us</a></li>
+                                <li><a class="nav-link" href="quotation.php">Quotation</a></li>
+                                <li><a class="nav-link" href="adminlogin.php">Admin</a></li>
                             </ul>
                         </nav><!-- / #primary-nav -->
                     </div>  

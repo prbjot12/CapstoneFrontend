@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Wheels On Deals</title>
-        
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="css/fontAwesome.css">
-        <link rel="stylesheet" href="css/hero-slider.css">
-        <link rel="stylesheet" href="css/owl-carousel.css">
-        <link rel="stylesheet" href="css/style.css">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Wheels On Deals</title>
 
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
-    </head>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/fontAwesome.css">
+    <link rel="stylesheet" href="css/hero-slider.css">
+    <link rel="stylesheet" href="css/owl-carousel.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
+</head>
 
 <body>
     <div class="wrap">
@@ -27,29 +28,29 @@
                 <div class="row">
                     <div class="col-md-12">
                         <button id="primary-nav-button" type="button">Menu</button>
-                        <a href="index.html"><div class="logo">
-                            Wheels on Deals
-                        </div></a>
+                        <a href="index.html">
+                            <div class="logo">
+                                Wheels on Deals
+                            </div>
+                        </a>
                         <nav id="primary-nav" class="dropdown cf">
                             <ul class="dropdown menu">
                                 <li><a href="index.html">Home</a></li>
-
-                                <li><a href="cars.html">Cars</a></li>
-
+                                <li><a href="vinreport.php">VIN Checker</a></li>
                                 <li class='active'>
                                     <a href="#">About</a>
                                 </li>
-
                                 <li><a class="nav-link" href="contact.php">Contact Us</a></li>
-                                <li class='active'><a class="nav-link" href="">Admin</a></li>
+                                <li><a class="nav-link" href="quotation.php">Quotation</a></li>
+                                <li><a class="nav-link" href="adminlogin.php">Admin</a></li>
                             </ul>
-                        </nav><!-- / #primary-nav -->
+                        </nav>
                     </div>
                 </div>
             </div>
         </header>
     </div>
-      
+
     <section class="banner banner-secondary" id="top" style="background-image: url(img/banner-image-1-1920x300.jpg);">
         <div class="container">
             <div class="row">
@@ -72,15 +73,15 @@
                             <br>
                             <h4>About us</h4>
                             <p><strong> Reinventing the way people buy cars </strong></p>
-                            <p>Our mission is to deliver a delightful car⁠-⁠buying experience to Canadians. 
-                                We’re tired of traditional dealerships that take advantage of customers. 
+                            <p>Our mission is to deliver a delightful car⁠-⁠buying experience to Canadians.
+                                We’re tired of traditional dealerships that take advantage of customers.
                                 Wheels On Deals aims to offer our customers high quality vehicles and a stress-free online car buying experience.
                                 We’re passionate about cars and giving Canadians a better alternative when buying a new vehicle. Our success is possible only with the support of world-class investors and an exceptional team.
                             </p>
                         </div>
                     </div>
                     <div class="col-md-5">
-                        <img src= "/img/about-1-720x480.jpg" class= "/img-fluid" alt="">
+                        <img src="/img/about-1-720x480.jpg" class="/img-fluid" alt="">
                     </div>
                 </div>
             </div>
@@ -90,19 +91,19 @@
             <div class="video-overlay"></div>
             <div class="video-content">
                 <div class="inner">
-                      <div class="section-heading">
-                          <span>OUR STORY</span>
-                          <h2>Driving towards the future</h2>
-                      </div>
-                      <!-- Modal button -->
+                    <div class="section-heading">
+                        <span>OUR STORY</span>
+                        <h2>Driving towards the future</h2>
+                    </div>
+                    <!-- Modal button -->
 
-                      <div class="container">
+                    <div class="container">
                         <div class="row">
                             <div class="col-lg-10 col-lg-offset-1">
                                 <p class="lead">When Meena, our founder, had a frustrating experience trying to buy a car from a dealership he realized the car industry was broken for Canadians. Since its founding in 2022, Wheels On Deals has been a key player in modernizing the used car market.</p>
                             </div>
                         </div>
-                      </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -168,16 +169,19 @@
     </footer>
 
     <div class="sub-footer">
-        <p>Copyright © 2022 Wheels On Deals  <a href="#">Wheels On Deals</a></p>
+        <p>Copyright © 2022 Wheels On Deals <a href="#">Wheels On Deals</a></p>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
-    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+    <script>
+        window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
+    </script>
 
     <script src="js/vendor/bootstrap.min.js"></script>
-    
+
     <script src="js/datepicker.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>

@@ -1,3 +1,10 @@
+<?php
+session_start();
+if (!isset($_SESSION['userid'])) {
+    header("location: adminlogin.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -40,6 +47,7 @@
                                 <li>
                                     <a href="about-us.php">About</a>
                                 </li>
+
                                 <li><a class="nav-link" href="contact.php">Contact Us</a></li>
                                 <li><a class="nav-link" href="quotation.php">Quotation</a></li>
                                 <li><a class="nav-link" href="adminlogin.php">Admin</a></li>
@@ -50,20 +58,102 @@
             </div>
         </header>
     </div>
-    <div class="card">
-        <form id="loginuser" method="post" action="checkadminlogin.php">
-            <h3 class="title">Admin Portal Log in</h3>
-            <p class="subtitle">Don't have an account? <a href="adminsignup.php"> sign Up</a></p>
-
+    <div class="addnewcard">
+        <form action="savevehicles.php" method="post" id="createvehicle" enctype="multipart/form-data">
+            <h3 class="title">Add New Vehicle</h3>
             <div class="email-login">
-                <label for="email"> <b>Email</b></label>
-                <input type="text" placeholder="Enter Email" name="email" id="email">
-                <label for="psw"><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="password" id="password">
+                <label for="Brand"> <b>Brand</b></label>
+                <select id="Brand" name="Brand">
+                    <option>Acura</option>
+                    <option>Alfa-Romeo</option>
+                    <option>Aston Martin</option>
+                    <option>Audi</option>
+                    <option>BMW</option>
+                    <option>Bentley</option>
+                    <option>Buick</option>
+                    <option>Cadilac</option>
+                    <option>Chevrolet</option>
+                    <option>Chrysler</option>
+                    <option>Daewoo</option>
+                    <option>Daihatsu</option>
+                    <option>Dodge</option>
+                    <option>Eagle</option>
+                    <option>Ferrari</option>
+                    <option>Fiat</option>
+                    <option>Fisker</option>
+                    <option>Ford</option>
+                    <option>Freighliner</option>
+                    <option>GMC - General Motors Company</option>
+                    <option>Genesis</option>
+                    <option>Geo</option>
+                    <option>Honda</option>
+                    <option>Hummer</option>
+                    <option>Hyundai</option>
+                    <option>Infinity</option>
+                    <option>Isuzu</option>
+                    <option>Jaguar</option>
+                    <option>Jeep</option>
+                    <option>Kla</option>
+                    <option>Lamborghini</option>
+                    <option>Land Rover</option>
+                    <option>Lexus</option>
+                    <option>Lincoln</option>
+                    <option>Lotus</option>
+                    <option>Mazda</option>
+                    <option>Maserati</option>
+                    <option>Maybach</option>
+                    <option>McLaren</option>
+                    <option>Mercedez-Benz</option>
+                    <option>Mercury</option>
+                    <option>Mini</option>
+                    <option>Mitsubishi</option>
+                    <option>Nissan</option>
+                    <option>Oldsmobile</option>
+                    <option>Panoz</option>
+                    <option>Plymouth</option>
+                    <option>Polestar</option>
+                    <option>Pontiac</option>
+                    <option>Porsche</option>
+                    <option>Ram</option>
+                    <option>Rivian</option>
+                    <option>Rolls_Royce</option>
+                    <option>Saab</option>
+                    <option>Saturn</option>
+                    <option>Smart</option>
+                    <option>Subaru</option>
+                    <option>Susuki</option>
+                    <option>Tesla</option>
+                    <option>Toyota</option>
+                    <option>Volkswagen</option>
+                    <option>Volvo</option>
+                </select>
+                <label for="VehicleType"><b>Vehvicle Type</b></label>
+                <select id="VehicleType" name="VehicleType">
+                    <option value="1">SUV</option>
+                    <option value="2">Sedan</option>
+                    <option value="3">Coupe</option>
+                    <option value="4">Convertible</option>
+                    <option value="5">Hatchback</option>
+                    <option value="6">Pickup</option>
+                    <option value="7">Van</option>
+                    <option value="8">Minivan</option>
+                    <option value="9">Wagon</option>
+                </select>
+                <label for="Model"><b>Model</b></label>
+                <input type="text" placeholder="Enter Model" name="Model" id="Model">
+                <label for="manufacturedate"><b>Manufacture Date</b></label>
+                <input type="date" placeholder="Enter Manufacture Date" name="manufacturedate" id="manufacturedate">
+                <label for="Price"><b>Price</b></label>
+                <input type="text" placeholder="Enter Price" name="Price" id="Price">
+                <label for="VIN"><b>VIN</b></label>
+                <input type="text" placeholder="Enter VIN" name="VIN" id="VIN">
+                <label for="carimage"><b>Vehicle Image</b></label>
+                <input type="file" name="carimage" id="carimage" style="margin-bottom: 10px;" accept="image/*">
+                <label for="color"><b>Vehicle Color</b></label>
+                <input type="color" name="color" id="color" style="margin-bottom: 10px;">
             </div>
-            <button class="cta-btn" type="submit" onclick="Login(event)">Log In</button>
-            <a class="forget-pass" href="#">Forgot password?</a>
-            </form>
+            <button class="cta-btn" type="submit" onclick="AddNewVehicle(event)">Add New Vehicle</button>
+        </form>
     </div>
     <footer>
         <div class="container">
@@ -139,19 +229,21 @@
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
     <script>
-        function Login(event) {
+        function AddNewVehicle(event) {
             event.preventDefault();
-            const Email = $('#email').val()
-            const Password = $('#password').val()
+            const Brand = $('#Brand').val()
+            const VehicleType = $('#VehicleType').val()
+            const Model = $('#Model').val()
+            const ManufactureDate = $('#manufacturedate').val()
+            const CarImage = $('#carimage').val()
+            const Color = $('#color').val()
+            const Price = $('#Price').val()
+            const VIN = $('#VIN').val()
 
-            if (Email !== '' && Password !== '') {
-                if (String(Email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-                        $('#loginuser').submit();
-                } else {
-                    alert('Invalid EmailID !!!!')
-                }
+            if (Brand !== '' && VehicleType !== '' && Model !== '' && ManufactureDate !== '' && CarImage !== '' && Color !== '' && Price !== '' && VIN !== '') {
+                $('#createvehicle').submit();
             } else {
-                alert('Please enter all details to proceed further !!!')
+                alert('Please enter all details to proceed further !!!');
             }
         }
     </script>

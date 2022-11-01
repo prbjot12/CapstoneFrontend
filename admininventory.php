@@ -1,3 +1,9 @@
+<?php
+require('sqlconnection.php');
+$connection = new DatabaseConnection();
+$results = $connection->get_vehicles();
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -36,14 +42,12 @@
                         <nav id="primary-nav" class="dropdown cf">
                             <ul class="dropdown menu">
                                 <li><a href="index.html">Home</a></li>
-
-                                <li><a href="cars.html">Cars</a></li>
-
+                                <li><a href="vinreport.php">VIN Checker</a></li>
                                 <li>
                                     <a href="about-us.php">About</a>
                                 </li>
-
-                                <li><a class="nav-link" href="about.php">Contact Us</a></li>
+                                <li><a class="nav-link" href="contact.php">Contact Us</a></li>
+                                <li><a class="nav-link" href="quotation.php">Quotation</a></li>
                                 <li><a class="nav-link" href="adminlogin.php">Admin</a></li>
                             </ul>
                         </nav><!-- / #primary-nav -->
@@ -53,50 +57,53 @@
         </header>
     </div>
     <h1 style="text-align:center;">Vehicle Inventory</h1>
+    <div class="buttonWrapper">
+        <a class="appButton" href="addnewvehicles.php">Add New Vehicle</a>
+    </div>
     <table id="vehicleInventory" class="display" style="width:100%">
         <thead>
             <tr>
-                <th>Vehicle Name</th>
-                <th>Manufacturer</th>
-                <th>Kilometers</th>
+                <th>Brand</th>
+                <th>VehicleType</th>
+                <th>Model</th>
                 <th>Price</th>
-                <th>Manufacturer Year</th>
+                <th>Manufacturer Date</th>
                 <th>Color</th>
+                <th>Vehicle Image</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>Jetta</td>
-                <td>Volkswagen</td>
-                <td>185,897 KM</td>
-                <td>$ 7,499</td>
-                <td>2011</td>
-                <td>Silver</td>
-            </tr>
-            <tr>
-                <td>Cruze</td>
-                <td>Chevrolet</td>
-                <td>176,000 KM</td>
-                <td>$ 8,495</td>
-                <td>2014</td>
-                <td>White</td>
-            </tr>
-            <tr>
-                <td>Focus</td>
-                <td>Ford</td>
-                <td>180,124 KM</td>
-                <td>$ 8,995</td>
-                <td>2013</td>
-                <td>Black</td>
-            </tr>
+            <?php
+            $sr_no = 0;
+            while ($row = mysqli_fetch_array($results, MYSQLI_ASSOC)) {
+                $sr_no++;
+                $str_to_print = "";
+                $str_to_print .= "<tr><td>{$row['Brand']}</td>";
+                $str_to_print .= "<td>{$row['Vehicle_Type']}</td>";
+                $str_to_print .= "<td>{$row['Model']}</td>";
+                $str_to_print .= "<td>$ {$row['Price']}</td>";
+                $str_to_print .= "<td>{$row['ManufactureDate']}</td>";
+                $str_to_print .= "<td><div style='background-color: {$row['Color']};'>&nbsp;</div></td>";
+                $str_to_print .= "<td><img style='height:150px;width:150px;' src='{$row['VehicleImage']}' class='productImg'/></td></tr>";
+                // $str_to_print .= "<td class='font-icons'> 
+                //                     <a href='edit_product.php?product_id={$row['idproduct']}'>
+                //                         <i class='fa fa-edit icons' id='edit'></i>
+                //                     </a>
+                //                     <i class='fa fa-remove icons deleteIcons' id='delete' data-productname='{$row['name']}' data-productid='{$row['idproduct']}'></i>                            
+                //                 </td> 
+                //             </tr>";
+
+                echo $str_to_print;
+            }
+            ?>
         </tbody>
         <tfoot>
             <tr>
-                <th>Vehicle Name</th>
-                <th>Manufacturer</th>
-                <th>Kilometers</th>
+                <th>Brand</th>
+                <th>VehicleType</th>
+                <th>Model</th>
                 <th>Price</th>
-                <th>Manufacturer Year</th>
+                <th>Manufacturer Date</th>
                 <th>Color</th>
             </tr>
         </tfoot>
