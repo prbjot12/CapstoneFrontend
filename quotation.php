@@ -41,7 +41,7 @@ $results = $connection->get_vehicles();
                         </a>
                         <nav id="primary-nav" class="dropdown cf">
                             <ul class="dropdown menu">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="index.php">Home</a></li>
                                 <li><a href="vinreport.php">VIN Checker</a></li>
                                 <li>
                                     <a href="about-us.php">About</a>
@@ -120,6 +120,10 @@ $results = $connection->get_vehicles();
                 <div class="email-login">
                     <label for="downpayment"><b>Interest Rate</b></label>
                     <input type="text" id="interestrate" value="3.25" name="interestrate" placeholder="Enter Interest Rate" />
+                </div>
+                <div class="email-login">
+                    <label for="loanstartdate"><b>Loan Start Date</b></label>
+                    <input type="date" id="loanstartdate" name="loanstartdate" placeholder="Select Loan Start Rate" />
                 </div>
                 <div class="email-login">
                     <label for="tradeintype"> <b>Trade-In Type</b></label>
@@ -278,6 +282,7 @@ $results = $connection->get_vehicles();
             let intRate = $('#interestrate').val()
             let downPayment = $('#downpayment').val()
             let tradeValue = $('#vehiclevalue').val()
+            let loanStartDate = $('#loanstartdate').val()
             let amount = parseInt(vehiclePrice)
             let months = parseInt(loanTerm)
             let down = parseInt(downPayment)
@@ -301,8 +306,33 @@ $results = $connection->get_vehicles();
                 intRate = document.getElementById('interestrate').value = '3.25';
             }
 
+            if (!loanStartDate) {
+                loanStartDate = document.getElementById('loanstartdate').value = formatDate(new Date());
+            }
 
-            var finalAmount = (((monInt + (monInt / (Math.pow((1 + monInt), months) - 1))) * (amount - (totalDown || 0)) / paymentfrequency)).toFixed(2);
+
+
+           
+            var finalAmount = ((monInt + (monInt / (Math.pow((1 + monInt), months) - 1))) * (amount - (totalDown || 0))).toFixed(2);
+           // var finalAmount = ((monInt + (monInt / (Math.pow((1 + monInt), months) - 1))) * (amount - (totalDown || 0))).toFixed(2); / 1
+            if (paymentfrequency === 4 || paymentfrequency === 2) {
+
+                // get total weeks in a month.
+                const weeks = getWeeksInMonth(parseInt(loanStartDate.split('-')[0]), parseInt(loanStartDate.split('-')[1]))
+                const weekCount = weeks.length
+                console.log(weekCount, 'weekCount')
+                console.log(finalAmount, 'finalAmount')
+                console.log(paymentfrequency, 'paymentfrequency')
+                if (paymentfrequency === 4) { // weekly payment
+                      // Weekly Payment = Monthly Payment / total weeks in a month
+                    finalAmount = parseFloat(finalAmount / weekCount).toFixed(2)
+                } else if (paymentfrequency === 2) { // bi - weekly 
+                    finalAmount = parseFloat(finalAmount / weekCount).toFixed(2)
+                     // Bi-Weekly Payment = (Monthly Payment / total weeks in a month) * 2
+                     finalAmount = finalAmount * 2
+                }
+
+            }
             const VehicleId = $('#Vehicle').val()
             const cardetailselement = $(`#${VehicleId}`)
             const Brand = cardetailselement.data('brand')
@@ -311,11 +341,11 @@ $results = $connection->get_vehicles();
             const ManufactureDate = cardetailselement.data('manufacturedate')
             const Price = cardetailselement.data('price')
             let paymentType = "Monthly"
-            if(paymentfrequency === 1) {
+            if (paymentfrequency === 1) {
                 paymentType = "Monthly"
             } else if (paymentfrequency === 2) {
                 paymentType = "Bi-Weekly"
-            } else if (paymentfrequency === 3) {
+            } else if (paymentfrequency === 4) {
                 paymentType = "Weekly"
             }
 
@@ -328,6 +358,45 @@ $results = $connection->get_vehicles();
             $('#quotationdetails_payment').html(`$ ${finalAmount}`)
             $('#quotationdetails').fadeOut()
             $('#quotationsummary').fadeIn()
+        }
+
+        function formatDate(date) {
+            var d = date,
+                month = '' + (d.getMonth() + 1),
+                day = '' + d.getDate(),
+                year = d.getFullYear();
+
+            if (month.length < 2)
+                month = '0' + month;
+            if (day.length < 2)
+                day = '0' + day;
+
+            return [year, month, day].join('-');
+        }
+
+        function getWeeksInMonth(year, month) {
+            const weeks = [],
+                firstDate = new Date(year, month, 1),
+                lastDate = new Date(year, month + 1, 0),
+                numDays = lastDate.getDate();
+
+            let dayOfWeekCounter = firstDate.getDay();
+
+            for (let date = 1; date <= numDays; date++) {
+                if (dayOfWeekCounter === 0 || weeks.length === 0) {
+                    weeks.push([]);
+                }
+                weeks[weeks.length - 1].push(date);
+                dayOfWeekCounter = (dayOfWeekCounter + 1) % 7;
+            }
+
+            return weeks
+                .filter((w) => !!w.length)
+                .map((w) => ({
+                    start: w[0],
+                    end: w[w.length - 1],
+                    dates: w,
+                }));
         }
     </script>
 </body>

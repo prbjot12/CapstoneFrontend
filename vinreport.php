@@ -41,7 +41,7 @@ $results = $connection->get_vehicles();
                         </a>
                         <nav id="primary-nav" class="dropdown cf">
                             <ul class="dropdown menu">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="index.php">Home</a></li>
                                 <li><a href="vinreport.php">VIN Checker</a></li>
                                 <li>
                                     <a href="about-us.php">About</a>

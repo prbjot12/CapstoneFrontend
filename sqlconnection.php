@@ -2,8 +2,8 @@
 class DatabaseConnection
 {
 
-    const DB_USER = 'Meena';
-    const DB_PASSWORD = '1234567890';
+    const DB_USER = 'root';
+    const DB_PASSWORD = '';
     const DB_HOST = 'localhost';
     const DB_NAME = 'WHEELSONDEALS';
 
@@ -114,6 +114,23 @@ class DatabaseConnection
     {
         $query = 'SELECT *,VTM.Vehicle_Type FROM `VEHICLES` V INNER JOIN VEHICLETYPEMASTER VTM ON VTM.VehicleType_Id = V.VehicleType';
         $results = @mysqli_query($this->dbc, $query);
+        return $results;
+    }
+
+    function get_vehiclebyid($vehicleId)
+    {
+        $vehicleid_clean = $this->prepare_string($vehicleId);
+
+        $query = 'SELECT *,VTM.Vehicle_Type FROM `VEHICLES` V INNER JOIN VEHICLETYPEMASTER VTM ON VTM.VehicleType_Id = V.VehicleType WHERE V.Vehicle_Id = ?';
+        $stmt = mysqli_prepare($this->dbc, $query);
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            's',
+            $vehicleid_clean
+        );
+        mysqli_stmt_execute($stmt);
+        $results =  mysqli_stmt_get_result($stmt);
         return $results;
     }
 }

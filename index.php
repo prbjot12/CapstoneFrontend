@@ -1,3 +1,9 @@
+<?php
+require('sqlconnection.php');
+$connection = new DatabaseConnection();
+$results = $connection->get_vehicles();
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -15,6 +21,7 @@
     <link rel="stylesheet" href="css/hero-slider.css">
     <link rel="stylesheet" href="css/owl-carousel.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/index.css">
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet">
 
@@ -50,65 +57,31 @@
             </div>
         </header>
     </div>
-
-    <section class="banner banner-secondary" id="top" style="background-image: url(img/banner-image-1-1920x300.jpg);">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <div class="banner-caption">
-                        <div class="line-dec"></div>
-                        <h2>About Us</h2>
-                    </div>
-                </div>
-            </div>
+    <div class="card">
+        <h1 class="title">Car Lists</h1>
+        <div class="car-card-container">
+        <?php
+            $sr_no = 0;
+            while ($row = mysqli_fetch_array($results, MYSQLI_ASSOC)) {
+                $date = date_create($row['ManufactureDate']);
+                $formatDate = date_format($date,"Y");
+                $sr_no++;
+                $str_to_print = "<a class='car-link' href='cardetails.php?vehicleid={$row['Vehicle_Id']}'>";
+                $str_to_print .= "<div class='car-card'>";
+                $str_to_print .= "<h2>{$formatDate} {$row['Brand']} {$row['Model']}</h2>";
+                $str_to_print .= "<img src='{$row['VehicleImage']}' />";
+                $str_to_print .= "<ul>";
+                $str_to_print .= "<li><div class='carcolor' style='background-color: {$row['Color']}'>&nbsp;</div></li>";
+                $str_to_print .= "<li>{$row['Vehicle_Type']}</li>";
+                $str_to_print .= "<li>$ {$row['Price']}</li>";
+                $str_to_print .= "</ul>";
+                $str_to_print .= "</div>";
+                $str_to_print .= "</a>";
+                echo $str_to_print;
+            }
+            ?>
         </div>
-    </section>
-
-    <main>
-        <section class="our-services">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-7">
-                        <div class="left-content">
-                            <br>
-                            <h4>About us</h4>
-                            <p><strong> Reinventing the way people buy cars </strong></p>
-                            <p>Our mission is to deliver a delightful car⁠-⁠buying experience to Canadians.
-                                We’re tired of traditional dealerships that take advantage of customers.
-                                Wheels On Deals aims to offer our customers high quality vehicles and a stress-free online car buying experience.
-                                We’re passionate about cars and giving Canadians a better alternative when buying a new vehicle. Our success is possible only with the support of world-class investors and an exceptional team.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <img src="/img/about-1-720x480.jpg" class="/img-fluid" alt="">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="video-container">
-            <div class="video-overlay"></div>
-            <div class="video-content">
-                <div class="inner">
-                    <div class="section-heading">
-                        <span>OUR STORY</span>
-                        <h2>Driving towards the future</h2>
-                    </div>
-                    <!-- Modal button -->
-
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-10 col-lg-offset-1">
-                                <p class="lead">When Meena, our founder, had a frustrating experience trying to buy a car from a dealership he realized the car industry was broken for Canadians. Since its founding in 2022, Wheels On Deals has been a key player in modernizing the used car market.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
+    </div>
     <footer>
         <div class="container">
             <div class="row">

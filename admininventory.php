@@ -41,7 +41,7 @@ $results = $connection->get_vehicles();
                         </a>
                         <nav id="primary-nav" class="dropdown cf">
                             <ul class="dropdown menu">
-                                <li><a href="index.html">Home</a></li>
+                                <li><a href="index.php">Home</a></li>
                                 <li><a href="vinreport.php">VIN Checker</a></li>
                                 <li>
                                     <a href="about-us.php">About</a>
@@ -83,16 +83,8 @@ $results = $connection->get_vehicles();
                 $str_to_print .= "<td>{$row['Model']}</td>";
                 $str_to_print .= "<td>$ {$row['Price']}</td>";
                 $str_to_print .= "<td>{$row['ManufactureDate']}</td>";
-                $str_to_print .= "<td><div style='background-color: {$row['Color']};'>&nbsp;</div></td>";
+                $str_to_print .= "<td><div style='background-color: {$row['Color']};' title='car color'>&nbsp;</div></td>";
                 $str_to_print .= "<td><img style='height:150px;width:150px;' src='{$row['VehicleImage']}' class='productImg'/></td></tr>";
-                // $str_to_print .= "<td class='font-icons'> 
-                //                     <a href='edit_product.php?product_id={$row['idproduct']}'>
-                //                         <i class='fa fa-edit icons' id='edit'></i>
-                //                     </a>
-                //                     <i class='fa fa-remove icons deleteIcons' id='delete' data-productname='{$row['name']}' data-productid='{$row['idproduct']}'></i>                            
-                //                 </td> 
-                //             </tr>";
-
                 echo $str_to_print;
             }
             ?>

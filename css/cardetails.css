@@ -1,0 +1,66 @@
+body {
+    background-color: rgb(228, 229, 247);
+}
+
+footer {
+    background-color: #fff !important;
+}
+
+.title {
+    text-align: center;
+    font-weight: bold;
+    margin: 25px 0;
+}
+
+.car-card-container {
+    width: 80%;
+    margin: 40px auto;
+}
+
+.carddetails {
+    font-family: sans-serif;
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+    border-radius: 10px;
+    background-color: #ffff;
+    padding: 1.8rem;
+    box-shadow: 2px 5px 20px rgb(0 0 0 / 10%);
+}
+
+.carddetails_features {
+    font-family: sans-serif;
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+    border-radius: 10px;
+    background-color: #ffff;
+    padding: 1.8rem;
+    box-shadow: 2px 5px 20px rgb(0 0 0 / 10%);
+}
+
+.featuredetails {
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.carcolor {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
+.bookvehicle {
+    background-color: #d44457;
+    border: 0;
+    color: #fff;
+    height: 40px;
+    width: 110px;
+    margin: 15px auto;
+    display: block;
+}
