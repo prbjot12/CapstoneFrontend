@@ -1,3 +1,12 @@
+<?php
+require('sqlconnection.php');
+session_start();
+$connection = new DatabaseConnection();
+if (isset($_SESSION['customerlogin'])) { 
+    $results = $connection->get_appointmentsbycustomerid($_SESSION["customerid"]);
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -15,9 +24,9 @@
     <link rel="stylesheet" href="css/hero-slider.css">
     <link rel="stylesheet" href="css/owl-carousel.css">
     <link rel="stylesheet" href="css/style.css">
-
+    <link rel="stylesheet" href="css/admininventory.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 </head>
 
@@ -37,8 +46,8 @@
                             <ul class="dropdown menu">
                                 <li><a href="index.php">Home</a></li>
                                 <li><a href="vinreport.php">VIN Checker</a></li>
-                                <li class='active'>
-                                    <a href="#">About</a>
+                                <li>
+                                    <a href="about-us.php">About</a>
                                 </li>
                                 <li><a class="nav-link" href="contact.php">Contact Us</a></li>
                                 <li class="dropdown">
@@ -51,71 +60,58 @@
                                 <li><a class="nav-link" href="customerlogin.php">Login</a></li>
                                 <li><a class="nav-link" href="adminlogin.php">Admin</a></li>
                             </ul>
-                        </nav>
+                        </nav><!-- / #primary-nav -->
                     </div>
                 </div>
             </div>
         </header>
     </div>
-
-    <section class="banner banner-secondary" id="top" style="background-image: url(img/banner-image-1-1920x300.jpg);">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <div class="banner-caption">
-                        <div class="line-dec"></div>
-                        <h2>About Us</h2>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <main>
-        <section class="our-services">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-7">
-                        <div class="left-content">
-                            <br>
-                            <h4>About us</h4>
-                            <p><strong> Reinventing the way people buy cars </strong></p>
-                            <p>Our mission is to deliver a delightful car⁠-⁠buying experience to Canadians.
-                                We’re tired of traditional dealerships that take advantage of customers.
-                                Wheels On Deals aims to offer our customers high quality vehicles and a stress-free online car buying experience.
-                                We’re passionate about cars and giving Canadians a better alternative when buying a new vehicle. Our success is possible only with the support of world-class investors and an exceptional team.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <img src="/img/about-1-720x480.jpg" class="/img-fluid" alt="">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="video-container">
-            <div class="video-overlay"></div>
-            <div class="video-content">
-                <div class="inner">
-                    <div class="section-heading">
-                        <span>OUR STORY</span>
-                        <h2>Driving towards the future</h2>
-                    </div>
-                    <!-- Modal button -->
-
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-10 col-lg-offset-1">
-                                <p class="lead">When Meena, our founder, had a frustrating experience trying to buy a car from a dealership he realized the car industry was broken for Canadians. Since its founding in 2022, Wheels On Deals has been a key player in modernizing the used car market.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
+    <h1 style="text-align:center;">View Appointments</h1>
+    <div class="buttonWrapper">
+        <a class="appButton" href="createappointments.php">Book New Appointment</a>
+    </div>
+    <table id="vehicleInventory" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Vehicle Name</th>
+                <th>Vehicle Type</th>
+                <th>Vehicle Image</th>
+                <th>Price</th>
+                <th>Appointment Date & Time</th>
+                <th>Location</th>
+                <th>Comments</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $sr_no = 0;
+            while ($row = mysqli_fetch_array($results, MYSQLI_ASSOC)) {
+                $sr_no++;
+                $str_to_print = "";
+                $str_to_print .= "<tr><td>{$row['Brand']} {$row['Model']}</td>";
+                $str_to_print .= "<td>{$row['Vehicle_Type']}</td>";
+                $str_to_print .= "<td><img style='height:150px;width:150px;' src='{$row['VehicleImage']}' class='productImg'/></td>";
+                $str_to_print .= "<td>$ {$row['Price']}</td>";
+                $str_to_print .= "<td>{$row['AppointmentDate']} {$row['AppointmentTime']}</td>";
+                $str_to_print .= "<td>{$row['LocationName']}</td>";
+                $str_to_print .= "<td>{$row['Comments']}</td></tr>";
+               
+                echo $str_to_print;
+            }
+            ?>
+        </tbody>
+        <tfoot>
+            <tr>
+            <th>Vehicle Name</th>
+                <th>Vehicle Type</th>
+                <th>Vehicle Image</th>
+                <th>Price</th>
+                <th>Appointment Date & Time</th>
+                <th>Location</th>
+                <th>Comments</th>
+            </tr>
+        </tfoot>
+    </table>
     <footer>
         <div class="container">
             <div class="row">
@@ -178,13 +174,19 @@
     <div class="sub-footer">
         <p>Copyright © 2022 Wheels On Deals <a href="#">Wheels On Deals</a></p>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script>
         window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
     </script>
+
     <script src="js/vendor/bootstrap.min.js"></script>
-    <script src="js/datepicker.js"></script>
-    <script src="js/plugins.js"></script>
-    <script src="js/main.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jq-3.6.0/dt-1.12.1/datatables.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#vehicleInventory').DataTable();
+        });
+    </script>
 </body>
 
 </html>

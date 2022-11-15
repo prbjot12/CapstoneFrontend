@@ -116,7 +116,7 @@ a {
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="password"], textarea {
   padding: 15px 20px;
   margin-top: 8px;
   margin-bottom: 15px;

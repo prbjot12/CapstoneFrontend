@@ -3,7 +3,8 @@ require('sqlconnection.php');
 $connection = new DatabaseConnection();
 $results = [];
 $row = null;
-
+$customerlogin = '0';
+session_start();
 if (!empty($_GET['vehicleid'])) {
     $vehicleid = $_GET['vehicleid'];
     $results = $connection->get_vehiclebyid($vehicleid);
@@ -13,6 +14,10 @@ if (!empty($_GET['vehicleid'])) {
 } else {
     $vehicleid = null;
     $error = "<p> Error! Vehicle ID not found.";
+}
+
+if(isset($_SESSION["customerlogin"]) == true && $_SESSION["customerlogin"] == true) {
+    $customerlogin = '1';
 }
 
 ?>
@@ -61,7 +66,14 @@ if (!empty($_GET['vehicleid'])) {
                                     <a href="#">About</a>
                                 </li>
                                 <li><a class="nav-link" href="contact.php">Contact Us</a></li>
-                                <li><a class="nav-link" href="quotation.php">Quotation</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Financial<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="quotation.php">Quotation</a></li>
+                                        <li><a href="amortization.php">Amortization</a></li>
+                                    </ul>
+                                </li>
+                                <li><a class="nav-link" href="customerlogin.php">Login</a></li>
                                 <li><a class="nav-link" href="adminlogin.php">Admin</a></li>
                             </ul>
                         </nav>
@@ -106,7 +118,10 @@ if (!empty($_GET['vehicleid'])) {
             $str_to_print .= "<dt>VIN</dt>";
             $str_to_print .= "<dd>{$row["VIN"]}</dd>";
             $str_to_print .= "</div>";
+            $str_to_print .= "<div class='appointmentwrapper'>";
             $str_to_print .= "<button class='bookvehicle'>Book Vehicle</button>";
+            $str_to_print .= "<button class='bookvehicle' onclick='bookappointment({$row["Vehicle_Id"]})'>Book Appointment</button>";
+            $str_to_print .= "</div>";
             $str_to_print .= "</div>";
             echo $str_to_print;
         } else {
@@ -173,14 +188,27 @@ if (!empty($_GET['vehicleid'])) {
             </div>
         </div>
     </footer>
-
-    <div class="sub-footer">
+<input type='hidden' id='iscustomerloggedIn' value='<?php if (isset($customerlogin)) echo $customerlogin; ?>' />
+     <div class="sub-footer">
         <p>Copyright © 2022 Wheels On Deals <a href="#">Wheels On Deals</a></p>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
     <script>
         window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
+
+        function bookappointment (vehicleid) {
+            const iscustomerloggedIn = $('#iscustomerloggedIn').val()
+            if(iscustomerloggedIn === '1') {
+                    window.location.href = `createappointments.php?vehicleid=${vehicleid}`
+            } else {
+               alert('Login to Book Appointment !!')
+               setTimeout(() => {
+                    window.location.href = "customerlogin.php"
+               }, 3000);
+           
+            }
+        }
     </script>
 
     <script src="js/vendor/bootstrap.min.js"></script>

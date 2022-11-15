@@ -133,4 +133,94 @@ class DatabaseConnection
         $results =  mysqli_stmt_get_result($stmt);
         return $results;
     }
+
+    function register_customer($email, $password, $mobile,  $firstname, $lastname)
+    {
+        $email_clean = $this->prepare_string($email);
+        $password_clean = $this->prepare_string($password);
+        $mobile_clean = $this->prepare_string($mobile);
+        $firstname_clean = $this->prepare_string($firstname);
+        $lastname_clean = $this->prepare_string($lastname);
+
+        $query = "INSERT INTO CUSTOMERS (Email, Phone_Number, Password, FirstName, LastName) VALUES (?, ?, ?, ?, ?)";
+
+        $stmt = mysqli_prepare($this->dbc, $query);
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            'sssss',
+            $email_clean,
+            $mobile_clean,
+            $password_clean,
+            $firstname_clean,
+            $lastname_clean
+        );
+
+        $result = mysqli_stmt_execute($stmt);
+
+        return $result;
+    }
+
+    function logincustomer($email, $password)
+    {
+        $email_clean = $this->prepare_string($email);
+        $password_clean = $this->prepare_string($password);
+        $query = "SELECT * FROM CUSTOMERS WHERE email = ? and password = ?;";
+        $stmt = mysqli_prepare($this->dbc, $query);
+        mysqli_stmt_bind_param(
+            $stmt,
+            'ss',
+            $email_clean,
+            $password_clean
+        );
+
+        mysqli_stmt_execute($stmt);
+        $result = mysqli_stmt_get_result($stmt);
+        return $result;
+    }
+
+    function create_appointment($CustomerID, $AppointmentType, $Location, $AppointmentDate,  $AppointmentTime,  $Comments,  $Vehicle)
+    {
+
+        $customerid_clean = $this->prepare_string($CustomerID);
+        $appointmenttype_clean = $this->prepare_string($AppointmentType);
+        $location_clean = $this->prepare_string($Location);
+        $appointmentdate_clean = $this->prepare_string($AppointmentDate);
+        $appointmenttime_clean = $this->prepare_string($AppointmentTime);
+        $comments_clean = $this->prepare_string($Comments);
+        $vehicleid_clean = $this->prepare_string($Vehicle);
+
+        $query = "INSERT INTO Appointments (Customer_Id, Vehicle_Id, AppointmentDate, AppointmentTime, LocationName, Comments, Appointment_Type) VALUES (?,?,?,?,?,?,?)";
+
+        $stmt = mysqli_prepare($this->dbc, $query);
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            'sssssss',
+            $customerid_clean,
+            $vehicleid_clean,
+            $appointmentdate_clean,
+            $appointmenttime_clean,
+            $location_clean,
+            $comments_clean,
+            $appointmenttype_clean
+        );
+        $result = mysqli_stmt_execute($stmt);
+        return $result;
+    }
+
+    function get_appointmentsbycustomerid($customerid)
+    {
+        $customerid_clean = $this->prepare_string($customerid);
+        $query = 'SELECT A.*,ATM.AppointmentType,V.*,C.*,VT.Vehicle_Type FROM APPOINTMENTS A INNER JOIN APPOINTMENTTYPEMASTER ATM ON ATM.AppointmentType_Id = A.Appointment_Type  INNER JOIN VEHICLES V ON V.Vehicle_Id = A.Vehicle_Id  INNER JOIN VEHICLETYPEMASTER VT ON VT.VehicleType_Id = V.VehicleType INNER JOIN CUSTOMERS C ON C.Customer_Id = A.Customer_Id WHERE A.Customer_Id = ?';
+        $stmt = mysqli_prepare($this->dbc, $query);
+        mysqli_stmt_bind_param(
+            $stmt,
+            's',
+            $customerid_clean
+        );
+        mysqli_stmt_execute($stmt);
+        $results =  mysqli_stmt_get_result($stmt);
+        return $results;
+    }
 }

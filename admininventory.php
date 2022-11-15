@@ -47,7 +47,14 @@ $results = $connection->get_vehicles();
                                     <a href="about-us.php">About</a>
                                 </li>
                                 <li><a class="nav-link" href="contact.php">Contact Us</a></li>
-                                <li><a class="nav-link" href="quotation.php">Quotation</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Financial<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="quotation.php">Quotation</a></li>
+                                        <li><a href="amortization.php">Amortization</a></li>
+                                    </ul>
+                                </li>
+                                <li><a class="nav-link" href="customerlogin.php">Login</a></li>
                                 <li><a class="nav-link" href="adminlogin.php">Admin</a></li>
                             </ul>
                         </nav><!-- / #primary-nav -->

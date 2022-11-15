@@ -1,3 +1,28 @@
+<?php
+require('sqlconnection.php');
+$connection = new DatabaseConnection();
+$results = $connection->get_vehicles();
+$vehicleid = '';
+if(isset($_GET["vehicleid"])) {
+    $vehicleid = $_GET["vehicleid"];
+}
+$customeremail = '';
+$customerphonenumber = '';
+$Customerid = '';
+$customerfirstname = '';
+$customerlastname = '';
+session_start();
+if (!isset($_SESSION['customerlogin'])) {
+    header("location: customerlogin.php");
+    exit();
+} else {
+    $customeremail = $_SESSION["customeremail"];
+    $customerphonenumber = $_SESSION["customerphonenumber"];
+    $Customerid = $_SESSION["customerid"];
+    $customerfirstname = $_SESSION["customerfirstname"];
+    $customerlastname = $_SESSION["customerlastname"];
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -15,9 +40,9 @@
     <link rel="stylesheet" href="css/hero-slider.css">
     <link rel="stylesheet" href="css/owl-carousel.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/adminlogin.css">
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 </head>
 
@@ -37,9 +62,10 @@
                             <ul class="dropdown menu">
                                 <li><a href="index.php">Home</a></li>
                                 <li><a href="vinreport.php">VIN Checker</a></li>
-                                <li class='active'>
-                                    <a href="#">About</a>
+                                <li>
+                                    <a href="about-us.php">About</a>
                                 </li>
+
                                 <li><a class="nav-link" href="contact.php">Contact Us</a></li>
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Financial<span class="caret"></span></a>
@@ -51,71 +77,89 @@
                                 <li><a class="nav-link" href="customerlogin.php">Login</a></li>
                                 <li><a class="nav-link" href="adminlogin.php">Admin</a></li>
                             </ul>
-                        </nav>
+                        </nav><!-- / #primary-nav -->
                     </div>
                 </div>
             </div>
         </header>
     </div>
-
-    <section class="banner banner-secondary" id="top" style="background-image: url(img/banner-image-1-1920x300.jpg);">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <div class="banner-caption">
-                        <div class="line-dec"></div>
-                        <h2>About Us</h2>
-                    </div>
-                </div>
+    <div class="addnewcard">
+        <form action="saveappointment.php" method="post" id="bookappointment" enctype="multipart/form-data">
+            <h3 class="title">Book an Appointment</h3>
+            <div class="email-login">
+            <label for="customeremail"><b>Customer Email</b></label>
+            <input type="text" placeholder="Enter Customer Email" name="customeremail" id="customeremail" disabled value='<?php if (isset($customeremail)) echo $customeremail; ?>'>
             </div>
-        </div>
-    </section>
-
-    <main>
-        <section class="our-services">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-7">
-                        <div class="left-content">
-                            <br>
-                            <h4>About us</h4>
-                            <p><strong> Reinventing the way people buy cars </strong></p>
-                            <p>Our mission is to deliver a delightful car⁠-⁠buying experience to Canadians.
-                                We’re tired of traditional dealerships that take advantage of customers.
-                                Wheels On Deals aims to offer our customers high quality vehicles and a stress-free online car buying experience.
-                                We’re passionate about cars and giving Canadians a better alternative when buying a new vehicle. Our success is possible only with the support of world-class investors and an exceptional team.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-md-5">
-                        <img src="/img/about-1-720x480.jpg" class="/img-fluid" alt="">
-                    </div>
-                </div>
+            <div class="email-login">
+            <label for="customernumber"><b>Customer Phone Number</b></label>
+            <input type="text" placeholder="Enter Phone Number" name="customernumber" id="customernumber" disabled value='<?php if (isset($customerphonenumber)) echo $customerphonenumber; ?>'>
             </div>
-        </section>
-
-        <section id="video-container">
-            <div class="video-overlay"></div>
-            <div class="video-content">
-                <div class="inner">
-                    <div class="section-heading">
-                        <span>OUR STORY</span>
-                        <h2>Driving towards the future</h2>
-                    </div>
-                    <!-- Modal button -->
-
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-10 col-lg-offset-1">
-                                <p class="lead">When Meena, our founder, had a frustrating experience trying to buy a car from a dealership he realized the car industry was broken for Canadians. Since its founding in 2022, Wheels On Deals has been a key player in modernizing the used car market.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="email-login">
+            <label for="customerfirstname"><b>Customer First Name</b></label>
+            <input type="text" placeholder="Enter First Name" name="customerfirstname" id="customerfirstname" disabled value='<?php if (isset($customerfirstname)) echo $customerfirstname; ?>'>
             </div>
-        </section>
-    </main>
-
+            <div class="email-login">
+            <label for="customerlastname"><b>Customer Last Name</b></label>
+            <input type="text" placeholder="Enter Last Name" name="customerlastname" id="customerlastname" disabled value='<?php if (isset($customerlastname)) echo $customerlastname; ?>'>
+            </div>
+            <div class="email-login">
+                <label for="appointmenttype"><b>Appointment Type</b></label>
+                <select id="appointmenttype" name="appointmenttype">
+                 <option value='1'>In-Person</option>
+                 <option value='2'>Virtual</option>
+                </select>
+                </div>
+            <div class="email-login">
+            <label for="location"><b>Location</b></label>
+            <input type="text" placeholder="Enter Location" name="location" id="location" value="">
+            </div>
+           
+            <div class="email-login">
+                    <label for="Vehicle"><b>Vehicle</b></label>
+                    <select id="Vehicle" name="Vehicle">
+                        <?php
+                        $sr_no = 0;
+                        while ($row = mysqli_fetch_array($results, MYSQLI_ASSOC)) {
+                            $sr_no++;
+                            $selected = '';
+                            if($vehicleid != '') {
+                                $selected .= ($row['Vehicle_Id'] == $vehicleid) ? 'selected="selected"' : '';
+                            }
+                            $str_to_print .= "<option value='{$row['Vehicle_Id']}' $selected>{$row['Brand']} - {$row['Model']}</option>";
+                            echo $str_to_print;
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="email-login">
+                <label for="appointmentdate"><b>Appointment Date</b></label>
+                <input type="date" placeholder="Enter Appointment Date" name="appointmentdate" id="appointmentdate">
+                    </div>
+                    <div class="email-login">
+                <label for="appointmenttime"><b>Appointment Time</b></label>
+                <select id="appointmenttime" name="appointmenttime">
+                 <option>10:00 AM</option>
+                 <option>11:00 AM</option>
+                 <option>12:00 PM</option>
+                 <option>01:00 PM</option>
+                 <option>02:00 PM</option>
+                 <option>03:00 PM</option>
+                 <option>04:00 PM</option>
+                 <option>05:00 PM</option>
+                 <option>06:00 PM</option>
+                 <option>07:00 PM</option>
+                </select>
+                </div>
+                <div class="email-login">
+            <label for="comments"><b>Comments</b></label>
+            <textarea type="text" placeholder="Enter Comments" name="comments" id="comments" value=""></textarea>
+            <input type='hidden' name="customerid" id='customerid' value='<?php if (isset($Customerid)) echo $Customerid; ?>' />
+            </div>
+                <button class="cta-btn" type="submit" onclick="createappointment(event)">Book Appointment</button>
+            </div>
+           
+        </form>
+    </div>
     <footer>
         <div class="container">
             <div class="row">
@@ -178,13 +222,33 @@
     <div class="sub-footer">
         <p>Copyright © 2022 Wheels On Deals <a href="#">Wheels On Deals</a></p>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
     <script>
         window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
     </script>
+
     <script src="js/vendor/bootstrap.min.js"></script>
+   
     <script src="js/datepicker.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
+    <script>
+        function createappointment(event) {
+            event.preventDefault();
+            const CustomerId = $('#customerid').val()
+            const Location = $('#location').val()
+            const AppointmentDate = $('#appointmentdate').val()
+            const AppointmentTime = $('#appointmenttime').val()
+            const Comments = $('#comments').val()
+
+            if (Location !== '' && AppointmentDate !== '' && AppointmentTime !== '' && Comments !== '') {
+                $('#bookappointment').submit();
+            } else {
+                alert('Please enter all details to proceed further !!!');
+            }
+        }
+    </script>
 </body>
 
 </html>

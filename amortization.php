@@ -22,7 +22,7 @@ $results = $connection->get_vehicles();
     <link rel="stylesheet" href="css/owl-carousel.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/adminlogin.css">
-
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,200,300,400,500,600,700,800,900" rel="stylesheet">
     <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 </head>
@@ -66,7 +66,7 @@ $results = $connection->get_vehicles();
     <div class="pageWrapper">
         <div class="addnewcard" id="selectvehicle">
             <form>
-                <h3 class="title">Select A Vehicle</h3>
+                <h4 class="title">Select A Vehicle to Generate Amortization Report</h4>
                 <div class="email-login">
                     <label for="Vehicle"> <b>Vehicle</b></label>
                     <select id="Vehicle" name="Vehicle">
@@ -81,109 +81,105 @@ $results = $connection->get_vehicles();
                         ?>
                     </select>
                 </div>
-                <button class="cta-btn" type="submit" onclick="selectVehicle(event)">Get Quote</button>
+                <button class="cta-btn" type="submit" onclick="selectVehicle(event)">Get Report</button>
             </form>
         </div>
         <div class="addnewcard" id="quotationdetails">
             <form>
-                <h3 class="title">Quotation Calulator</h3>
+                <h3 class="title">Amortization Calculator</h3>
                 <h4 class="subtitle" id="cardetails"></h4>
-                <div class="email-login">
-                    <label for="Vehicle"> <b>Payment Frequency</b></label>
-                    <div class="radiowrapper">
-                        <div class="radiodetails">
-                            <label for="paymentfrequencymonthly">Monthly</label>
-                            <input type="radio" id="paymentfrequencymonthly" name="paymentfrequency" value="1" checked />
-                        </div>
-                        <div class="radiodetails">
-                            <label for="paymentfrequencybiweekly">Bi-Weekly</label>
-                            <input type="radio" id="paymentfrequencybiweekly" name="paymentfrequency" value="2" />
-                        </div>
-                        <div class="radiodetails">
-                            <label for="paymentfrequencyweekly">Weekly</label>
-                            <input type="radio" id="paymentfrequencyweekly" name="paymentfrequency" value="4" />
-                        </div>
-                    </div>
-                </div>
-                <div class="email-login">
-                    <label for="Vehicle"> <b>Terms</b></label>
-                    <select id="terms" name="terms">
-                        <option value="36">36 Months</option>
-                        <option value="48">48 Months</option>
-                        <option value="60">60 Months</option>
-                        <option value="72">72 Months</option>
-                        <option value="84">84 Months</option>
-                    </select>
-                </div>
                 <div class="email-login">
                     <label for="carprice"><b>Car Price</b></label>
                     <input type="text" id="carprice" value="" name="carprice" disabled />
-                </div>
-                <div class="email-login">
-                    <label for="downpayment"><b>Down Payment</b></label>
-                    <input type="text" id="downpayment" value="2000" name="downpayment" placeholder="Enter DownPayment Rate" />
                 </div>
                 <div class="email-login">
                     <label for="downpayment"><b>Interest Rate</b></label>
                     <input type="text" id="interestrate" value="3.25" name="interestrate" placeholder="Enter Interest Rate" />
                 </div>
                 <div class="email-login">
-                    <label for="loanstartdate"><b>Loan Start Date</b></label>
-                    <input type="date" id="loanstartdate" name="loanstartdate" placeholder="Select Loan Start Rate" />
+                    <label for="Vehicle"> <b>Terms</b></label>
+                    <select id="terms" name="terms">
+                        <option value="12">12 Months</option>
+                        <option value="24">24 Months</option>
+                        <option value="36">36 Months</option>
+                        <option value="48">48 Months</option>
+                        <option value="60">60 Months</option>
+                        <option value="72">72 Months</option>
+                    </select>
                 </div>
-                <div class="email-login">
-                    <label for="tradeintype"> <b>Trade-In Type</b></label>
-                    <div class="radiowrapper">
-                        <div class="radiodetails">
-                            <label for="tradeInType_Owned">Owned</label>
-                            <input type="radio" id="tradeInType_Owned" name="tradeintype" value="1" checked />
-                        </div>
-                        <div class="radiodetails">
-                            <label for="tradeInType_Leased">Leased</label>
-                            <input type="radio" id="tradeInType_Leased" name="tradeintype" value="2" />
-                        </div>
-                    </div>
-                </div>
-                <div class="email-login">
-                    <label for="downpayment"> <b>Vehicle Value</b></label>
-                    <input type="text" id="vehiclevalue" name="vehiclevalue" value="0" placeholder="Enter Vehicle Value" />
-                </div>
-                <button class="cta-btn" onclick="getsummary(event)">Calculate</button>
+                <button class="cta-btn" onclick="getValues(event)">Calculate</button>
             </form>
         </div>
         <div class="addnewcard" id="quotationsummary">
             <form>
-                <h3 class="title">Quotation Summary</h3>
+                <h3 class="title">Amortization Summary</h3>
                 <div class="quotationdetailswrapper">
                     <dl>
                         <div class="quotationdetails">
-                            <dt id="paymenttype">Payment</dt>
-                            <dd id="quotationdetails_payment"></dd>
+                            <dt id="paymenttype">Loan amount</dt>
+                            <dd id="quotationdetails_loanamount"></dd>
                         </div>
                         <div class="quotationdetails">
-                            <dt>Brand</dt>
-                            <dd id="quotationdetails_brand"></dd>
+                            <dt>Interest rate</dt>
+                            <dd id="quotationdetails_interestrate"></dd>
                         </div>
                         <div class="quotationdetails">
-                            <dt>VehicleType</dt>
-                            <dd id="quotationdetails_type"></dd>
+                            <dt>Number of months</dt>
+                            <dd id="quotationdetails_numberofmonths"></dd>
                         </div>
                         <div class="quotationdetails">
-                            <dt>Model</dt>
-                            <dd id="quotationdetails_model"></dd>
+                            <dt>Monthly payment</dt>
+                            <dd id="quotationdetails_monthlypayment"></dd>
                         </div>
                         <div class="quotationdetails">
-                            <dt>Manufacture Date</dt>
-                            <dd id="quotationdetails_manufacturedate"></dd>
+                            <dt>Total paid</dt>
+                            <dd id="quotationdetails_totalpaid"></dd>
                         </div>
-                        <div class="quotationdetails">
-                            <dt>Price</dt>
-                            <dd id="quotationdetails_price"></dd>
-                        </div>
-
                     </dl>
                 </div>
-                <button class="cta-btn" onclick="window.location.reload()">Get a new Quote</button>
+                <div class="tablewrapper" id="amortizationtable">
+                    <table id="vehicleInventory" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Brand</th>
+                                <th>VehicleType</th>
+                                <th>Model</th>
+                                <th>Price</th>
+                                <th>Manufacturer Date</th>
+                                <th>Color</th>
+                                <th>Vehicle Image</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $sr_no = 0;
+                            while ($row = mysqli_fetch_array($results, MYSQLI_ASSOC)) {
+                                $sr_no++;
+                                $str_to_print = "";
+                                $str_to_print .= "<tr><td>{$row['Brand']}</td>";
+                                $str_to_print .= "<td>{$row['Vehicle_Type']}</td>";
+                                $str_to_print .= "<td>{$row['Model']}</td>";
+                                $str_to_print .= "<td>$ {$row['Price']}</td>";
+                                $str_to_print .= "<td>{$row['ManufactureDate']}</td>";
+                                $str_to_print .= "<td><div style='background-color: {$row['Color']};' title='car color'>&nbsp;</div></td>";
+                                $str_to_print .= "<td><img style='height:150px;width:150px;' src='{$row['VehicleImage']}' class='productImg'/></td></tr>";
+                                echo $str_to_print;
+                            }
+                            ?>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Brand</th>
+                                <th>VehicleType</th>
+                                <th>Model</th>
+                                <th>Price</th>
+                                <th>Manufacturer Date</th>
+                                <th>Color</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <button class="cta-btn" onclick="window.location.reload()">Get a new Amortization</button>
             </form>
         </div>
     </div>
@@ -260,6 +256,7 @@ $results = $connection->get_vehicles();
     <script src="js/datepicker.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/jq-3.6.0/dt-1.12.1/datatables.min.js"></script>
     <input type="hidden" id="vehicleId" value="" />
     <script>
         function selectVehicle(event) {
@@ -270,7 +267,7 @@ $results = $connection->get_vehicles();
                 const Brand = cardetailselement.data('brand')
                 const Model = cardetailselement.data('model')
                 const Price = cardetailselement.data('price')
-                $('#vehicleId').val(VehicleId)
+                $('#carprice').val(Price)
                 $('#selectvehicle').fadeOut()
                 $('#quotationdetails').fadeIn()
                 $('#cardetails').html(`${Brand} - ${Model}`)
@@ -282,7 +279,6 @@ $results = $connection->get_vehicles();
 
         function getsummary(event) {
             event.preventDefault();
-            let paymentfrequency = parseInt($('[name="paymentfrequency"]:checked').val())
             let vehiclePrice = $('#carprice').val()
             let loanTerm = $('#terms').val()
             let intRate = $('#interestrate').val()
@@ -318,9 +314,9 @@ $results = $connection->get_vehicles();
 
 
 
-           
+
             var finalAmount = ((monInt + (monInt / (Math.pow((1 + monInt), months) - 1))) * (amount - (totalDown || 0))).toFixed(2);
-          
+
             if (paymentfrequency === 4 || paymentfrequency === 2) {
 
                 // get total weeks in a month.
@@ -330,12 +326,12 @@ $results = $connection->get_vehicles();
                 console.log(finalAmount, 'finalAmount')
                 console.log(paymentfrequency, 'paymentfrequency')
                 if (paymentfrequency === 4) {
-                      // Weekly Payment = Monthly Payment / total weeks in a month
+                    // Weekly Payment = Monthly Payment / total weeks in a month
                     finalAmount = parseFloat(finalAmount / weekCount).toFixed(2)
                 } else if (paymentfrequency === 2) {
                     finalAmount = parseFloat(finalAmount / weekCount).toFixed(2)
-                     // Bi-Weekly Payment = (Monthly Payment / total weeks in a month) * 2
-                     finalAmount = finalAmount * 2
+                    // Bi-Weekly Payment = (Monthly Payment / total weeks in a month) * 2
+                    finalAmount = finalAmount * 2
                 }
 
             }
@@ -403,6 +399,103 @@ $results = $connection->get_vehicles();
                     end: w[w.length - 1],
                     dates: w,
                 }));
+        }
+
+        function getValues(event) {
+            event.preventDefault();
+            //button click gets values from inputs
+            var balance = parseFloat(document.getElementById("carprice").value);
+            var interestRate = parseFloat(document.getElementById("interestrate").value / 100.0);
+            var terms = parseInt(document.getElementById("terms").value);
+            //validate inputs - display error if invalid, otherwise, display table
+            var balVal = validateInputs(balance);
+            var intrVal = validateInputs(interestRate);
+            if (balVal && intrVal) {
+                amort(balance, interestRate, terms);
+            } else {
+                //returns error if inputs are invalid
+                alert("Please Check your inputs and retry - invalid values.");
+            }
+        }
+
+        function validateInputs(value) {
+            //some code here to validate inputs
+            if ((value == null) || (value == "")) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function amort(balance, interestRate, terms) {
+            //Calculate the per month interest rate
+            var monthlyRate = interestRate / 12;
+            //Calculate the payment
+            var payment = balance * (monthlyRate / (1 - Math.pow(1 + monthlyRate, -terms)));
+            //begin building the return string for the display of the amort table
+
+            $('#quotationdetails_loanamount').html("$" + balance.toFixed(2));
+            $('#quotationdetails_interestrate').html((interestRate * 100).toFixed(2))
+            $('#quotationdetails_numberofmonths').html(terms)
+            $('#quotationdetails_monthlypayment').html(payment.toFixed(2))
+            $('#quotationdetails_totalpaid').html((payment * terms).toFixed(2))
+            $('#quotationdetails').fadeOut()
+            $('#quotationsummary').fadeIn()
+
+            var result = "";
+            //add header row for table to return string
+            result += "<table id='amortization' class='display' style='width:100%'> \
+                       <thead> \
+                        <tr> \
+                        <th>Month</th> \
+                        <th>Balance</th> \
+                        <th>Interest</th> \
+                        <th>Principal</th> \
+                        </tr> \
+                        </thead> \
+                        <tbody>";
+            /**
+             * Loop that calculates the monthly Loan amortization amounts then adds 
+             * them to the return string 
+             */
+            for (var count = 0; count < terms; ++count) {
+                //in-loop interest amount holder
+                var interest = 0;
+
+                //in-loop monthly principal amount holder
+                var monthlyPrincipal = 0;
+
+                //start a new table row on each loop iteration
+                result += "<tr>";
+
+                //display the month number in col 1 using the loop count variable
+                result += "<td>" + (count + 1) + "</td>";
+
+
+                //code for displaying in loop balance
+                result += "<td> $" + balance.toFixed(2) + "</td>";
+
+                //calc the in-loop interest amount and display
+                interest = balance * monthlyRate;
+                result += "<td> $" + interest.toFixed(2) + "</td>";
+
+                //calc the in-loop monthly principal and display
+                monthlyPrincipal = payment - interest;
+                result += "<td> $" + monthlyPrincipal.toFixed(2) + "</td>";
+
+                //end the table row on each iteration of the loop	
+                result += "</tr>";
+
+                //update the balance for each loop iteration
+                balance = balance - monthlyPrincipal;
+            }
+
+            //Final piece added to return string before returning it - closes the table
+            result += "</tbody></table>";
+
+            //returns the concatenated string to the page
+            $('#amortizationtable').html(result)
+            $('#amortization').DataTable();
         }
     </script>
 </body>

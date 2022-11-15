@@ -60,7 +60,13 @@ footer {
     border: 0;
     color: #fff;
     height: 40px;
-    width: 110px;
-    margin: 15px auto;
+    width: 150px;
     display: block;
+}
+
+.appointmentwrapper {
+    width: 60%;
+    margin: 15px auto;
+    display: flex;
+    justify-content: space-around;
 }
