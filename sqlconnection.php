@@ -2,7 +2,7 @@
 class DatabaseConnection
 {
 
-    const DB_USER = 'root';
+    const DB_USER = '';
     const DB_PASSWORD = '';
     const DB_HOST = 'localhost';
     const DB_NAME = 'WHEELSONDEALS';
@@ -134,26 +134,32 @@ class DatabaseConnection
         return $results;
     }
 
-    function register_customer($email, $password, $mobile,  $firstname, $lastname)
+    function register_customer($email, $password, $mobile,  $firstname, $lastname, $province, $city, $country)
     {
         $email_clean = $this->prepare_string($email);
         $password_clean = $this->prepare_string($password);
         $mobile_clean = $this->prepare_string($mobile);
         $firstname_clean = $this->prepare_string($firstname);
         $lastname_clean = $this->prepare_string($lastname);
+        $province_clean = $this->prepare_string($province);
+        $city_clean = $this->prepare_string($city);
+        $country_clean = $this->prepare_string($country);
 
-        $query = "INSERT INTO CUSTOMERS (Email, Phone_Number, Password, FirstName, LastName) VALUES (?, ?, ?, ?, ?)";
+        $query = "INSERT INTO CUSTOMERS (Email, Phone_Number, Password, FirstName, LastName, State, CITY, Country) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = mysqli_prepare($this->dbc, $query);
 
         mysqli_stmt_bind_param(
             $stmt,
-            'sssss',
+            'ssssssss',
             $email_clean,
             $mobile_clean,
             $password_clean,
             $firstname_clean,
-            $lastname_clean
+            $lastname_clean,
+            $province_clean,
+            $city_clean,
+            $country_clean
         );
 
         $result = mysqli_stmt_execute($stmt);
@@ -222,5 +228,66 @@ class DatabaseConnection
         mysqli_stmt_execute($stmt);
         $results =  mysqli_stmt_get_result($stmt);
         return $results;
+    }
+
+    function update_vehicle($Brand, $VehicleType, $Model, $ManufactureDate, $Color, $img_final_location, $Price, $VIN, $VehcileId)
+    {
+
+        $brand_clean = $this->prepare_string($Brand);
+        $vehicletype_clean = $this->prepare_string($VehicleType);
+        $model_clean = $this->prepare_string($Model);
+        $manufacturedate_clean = $this->prepare_string($ManufactureDate);
+        $color_clean = $this->prepare_string($Color);
+        $image_clean = $this->prepare_string($img_final_location);
+        $price_clean = $this->prepare_string($Price);
+        $VIN_clean = $this->prepare_string($VIN);
+        $VehcileId_clean =  $this->prepare_string($VehcileId);
+
+        $query = "UPDATE VEHICLES SET Brand = ?,VehicleType = ?,Model = ?,ManufactureDate = ?,VehicleImage = ?,Color = ?,Price = ?,VIN = ? WHERE Vehicle_Id = ?";
+
+        $stmt = mysqli_prepare($this->dbc, $query);
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            'sssssssss',
+            $brand_clean,
+            $vehicletype_clean,
+            $model_clean,
+            $manufacturedate_clean,
+            $image_clean,
+            $color_clean,
+            $price_clean,
+            $VIN_clean,
+            $VehcileId_clean
+        );
+        $result = mysqli_stmt_execute($stmt);
+        return $result;
+    }
+
+    function delete_vehicle($VehcileId)
+    {
+
+        $vehicleid_clean = $this->prepare_string($VehcileId);
+
+        $query = "DELETE FROM Appointments WHERE Vehicle_Id = ?;";
+        $stmt = mysqli_prepare($this->dbc, $query);
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            's',
+            $vehicleid_clean
+        );
+        $result = mysqli_stmt_execute($stmt);
+
+        $deletequery = "DELETE FROM Vehicles WHERE Vehicle_Id = ?;";
+        $deletestmt = mysqli_prepare($this->dbc, $deletequery);
+
+        mysqli_stmt_bind_param(
+            $deletestmt,
+            's',
+            $vehicleid_clean
+        );
+        $result = mysqli_stmt_execute($deletestmt);
+        return $result;
     }
 }
