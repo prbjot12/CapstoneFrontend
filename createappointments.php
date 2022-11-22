@@ -3,7 +3,7 @@ require('sqlconnection.php');
 $connection = new DatabaseConnection();
 $results = $connection->get_vehicles();
 $vehicleid = '';
-if(isset($_GET["vehicleid"])) {
+if (isset($_GET["vehicleid"])) {
     $vehicleid = $_GET["vehicleid"];
 }
 $customeremail = '';
@@ -87,78 +87,78 @@ if (!isset($_SESSION['customerlogin'])) {
         <form action="saveappointment.php" method="post" id="bookappointment" enctype="multipart/form-data">
             <h3 class="title">Book an Appointment</h3>
             <div class="email-login">
-            <label for="customeremail"><b>Customer Email</b></label>
-            <input type="text" placeholder="Enter Customer Email" name="customeremail" id="customeremail" disabled value='<?php if (isset($customeremail)) echo $customeremail; ?>'>
+                <label for="customeremail"><b>Customer Email</b></label>
+                <input type="text" placeholder="Enter Customer Email" name="customeremail" id="customeremail" disabled value='<?php if (isset($customeremail)) echo $customeremail; ?>'>
             </div>
             <div class="email-login">
-            <label for="customernumber"><b>Customer Phone Number</b></label>
-            <input type="text" placeholder="Enter Phone Number" name="customernumber" id="customernumber" disabled value='<?php if (isset($customerphonenumber)) echo $customerphonenumber; ?>'>
+                <label for="customernumber"><b>Customer Phone Number</b></label>
+                <input type="text" placeholder="Enter Phone Number" name="customernumber" id="customernumber" disabled value='<?php if (isset($customerphonenumber)) echo $customerphonenumber; ?>'>
             </div>
             <div class="email-login">
-            <label for="customerfirstname"><b>Customer First Name</b></label>
-            <input type="text" placeholder="Enter First Name" name="customerfirstname" id="customerfirstname" disabled value='<?php if (isset($customerfirstname)) echo $customerfirstname; ?>'>
+                <label for="customerfirstname"><b>Customer First Name</b></label>
+                <input type="text" placeholder="Enter First Name" name="customerfirstname" id="customerfirstname" disabled value='<?php if (isset($customerfirstname)) echo $customerfirstname; ?>'>
             </div>
             <div class="email-login">
-            <label for="customerlastname"><b>Customer Last Name</b></label>
-            <input type="text" placeholder="Enter Last Name" name="customerlastname" id="customerlastname" disabled value='<?php if (isset($customerlastname)) echo $customerlastname; ?>'>
+                <label for="customerlastname"><b>Customer Last Name</b></label>
+                <input type="text" placeholder="Enter Last Name" name="customerlastname" id="customerlastname" disabled value='<?php if (isset($customerlastname)) echo $customerlastname; ?>'>
             </div>
             <div class="email-login">
                 <label for="appointmenttype"><b>Appointment Type</b></label>
                 <select id="appointmenttype" name="appointmenttype">
-                 <option value='1'>In-Person</option>
-                 <option value='2'>Virtual</option>
+                    <option value='1'>In-Person</option>
+                    <option value='2'>Virtual</option>
                 </select>
-                </div>
-            <div class="email-login">
-            <label for="location"><b>Location</b></label>
-            <input type="text" placeholder="Enter Location" name="location" id="location" value="">
             </div>
-           
             <div class="email-login">
-                    <label for="Vehicle"><b>Vehicle</b></label>
-                    <select id="Vehicle" name="Vehicle">
-                        <?php
-                        $sr_no = 0;
-                        while ($row = mysqli_fetch_array($results, MYSQLI_ASSOC)) {
-                            $sr_no++;
-                            $selected = '';
-                            if($vehicleid != '') {
-                                $selected .= ($row['Vehicle_Id'] == $vehicleid) ? 'selected="selected"' : '';
-                            }
-                            $str_to_print .= "<option value='{$row['Vehicle_Id']}' $selected>{$row['Brand']} - {$row['Model']}</option>";
-                            echo $str_to_print;
+                <label for="location"><b>Location</b></label>
+                <input type="text" placeholder="Enter Location" name="location" id="location" value="">
+            </div>
+
+            <div class="email-login">
+                <label for="Vehicle"><b>Vehicle</b></label>
+                <select id="Vehicle" name="Vehicle">
+                    <?php
+                    $sr_no = 0;
+                    while ($row = mysqli_fetch_array($results, MYSQLI_ASSOC)) {
+                        $sr_no++;
+                        $selected = '';
+                        if ($vehicleid != '') {
+                            $selected .= ($row['Vehicle_Id'] == $vehicleid) ? 'selected="selected"' : '';
                         }
-                        ?>
-                    </select>
-                </div>
-                <div class="email-login">
+                        $str_to_print .= "<option value='{$row['Vehicle_Id']}' $selected>{$row['Brand']} - {$row['Model']}</option>";
+                        echo $str_to_print;
+                    }
+                    ?>
+                </select>
+            </div>
+            <div class="email-login">
                 <label for="appointmentdate"><b>Appointment Date</b></label>
                 <input type="date" placeholder="Enter Appointment Date" name="appointmentdate" id="appointmentdate">
-                    </div>
-                    <div class="email-login">
+            </div>
+            <div class="email-login">
                 <label for="appointmenttime"><b>Appointment Time</b></label>
                 <select id="appointmenttime" name="appointmenttime">
-                 <option>10:00 AM</option>
-                 <option>11:00 AM</option>
-                 <option>12:00 PM</option>
-                 <option>01:00 PM</option>
-                 <option>02:00 PM</option>
-                 <option>03:00 PM</option>
-                 <option>04:00 PM</option>
-                 <option>05:00 PM</option>
-                 <option>06:00 PM</option>
-                 <option>07:00 PM</option>
+                    <option>10:00 AM</option>
+                    <option>11:00 AM</option>
+                    <option>12:00 PM</option>
+                    <option>01:00 PM</option>
+                    <option>02:00 PM</option>
+                    <option>03:00 PM</option>
+                    <option>04:00 PM</option>
+                    <option>05:00 PM</option>
+                    <option>06:00 PM</option>
+                    <option>07:00 PM</option>
                 </select>
-                </div>
-                <div class="email-login">
-            <label for="comments"><b>Comments</b></label>
-            <textarea type="text" placeholder="Enter Comments" name="comments" id="comments" value=""></textarea>
-            <input type='hidden' name="customerid" id='customerid' value='<?php if (isset($Customerid)) echo $Customerid; ?>' />
             </div>
-                <button class="cta-btn" type="submit" onclick="createappointment(event)">Book Appointment</button>
+            <div class="email-login">
+                <label for="comments"><b>Comments</b></label>
+                <textarea type="text" placeholder="Enter Comments" name="comments" id="comments" value=""></textarea>
+                <input type='hidden' name="customerid" id='customerid' value='<?php if (isset($Customerid)) echo $Customerid; ?>' />
             </div>
-           
-        </form>
+            <button class="cta-btn" type="submit" onclick="createappointment(event)">Book Appointment</button>
+    </div>
+
+    </form>
     </div>
     <footer>
         <div class="container">
@@ -229,11 +229,42 @@ if (!isset($_SESSION['customerlogin'])) {
     </script>
 
     <script src="js/vendor/bootstrap.min.js"></script>
-   
+
     <script src="js/datepicker.js"></script>
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
     <script>
+        var swear_words_arr = new Array("bloody", "war", "terror");
+        var swear_alert_arr = new Array;
+        var swear_alert_count = 0;
+
+        function reset_alert_count() {
+            swear_alert_count = 0;
+        }
+
+        function validate_text(comments) {
+            reset_alert_count();
+            var compare_text = comments;
+            for (var i = 0; i < swear_words_arr.length; i++) {
+                for (var j = 0; j < (compare_text.length); j++) {
+                    if (swear_words_arr[i] == compare_text.substring(j, (j + swear_words_arr[i].length)).toLowerCase()) {
+                        swear_alert_arr[swear_alert_count] = compare_text.substring(j, (j + swear_words_arr[i].length));
+                        swear_alert_count++;
+                    }
+                }
+            }
+            var alert_text = "";
+            for (var k = 1; k <= swear_alert_count; k++) {
+                alert_text += "\n" + "(" + k + ")  " + swear_alert_arr[k - 1];
+            }
+            if (swear_alert_count > 0) {
+                alert("The message will not be sent!!!\nThe following illegal words were found:\n_______________________________\n" + alert_text + "\n_______________________________");
+                return false
+            } else {
+               return true
+            }
+        }
+
         function createappointment(event) {
             event.preventDefault();
             const CustomerId = $('#customerid').val()
@@ -241,9 +272,13 @@ if (!isset($_SESSION['customerlogin'])) {
             const AppointmentDate = $('#appointmentdate').val()
             const AppointmentTime = $('#appointmenttime').val()
             const Comments = $('#comments').val()
-
+            
             if (Location !== '' && AppointmentDate !== '' && AppointmentTime !== '' && Comments !== '') {
-                $('#bookappointment').submit();
+                if(!validate_text(Comments)) {
+                    return;
+                } else {
+                    $('#bookappointment').submit();
+                }
             } else {
                 alert('Please enter all details to proceed further !!!');
             }
