@@ -71,6 +71,241 @@
                 <input type="text" placeholder="Enter First Name" name="firstname" id="firstname">
                 <label for="lastname"><b>Last Name</b></label>
                 <input type="text" placeholder="Enter Last Name" name="lastname" id="lastname">
+                <label for="province"><b>Province</b></label>
+                <select id="province" name="province" onchange="fetchcities(event)">
+                    <option value="AB">Alberta</option>
+                    <option value="BC">British Columbia</option>
+                    <option value="MB">Manitoba</option>
+                    <option value="NB">New Brunswick</option>
+                    <option value="NL">Newfoundland and Labrador</option>
+                    <option value="NS">Nova Scotia</option>
+                    <option value="ON">Ontario</option>
+                    <option value="PE">Prince Edward Island</option>
+                    <option value="QC">Quebec</option>
+                    <option value="SK">Saskatchewan</option>
+                    <option value="NT">Northwest Territories</option>
+                    <option value="NU">Nunavut</option>
+                    <option value="YT">Yukon</option>
+                </select>
+                <label for="city"><b>City</b></label>
+                <select id="city" name="city">
+                    <option value=""></option>
+                </select>
+                <label for="country"><b>Country</b></label>
+                <select id="country" name="country">
+                    <option>Afghanistan</option>
+                    <option>Albania</option>
+                    <option>Algeria</option>
+                    <option>Andorra</option>
+                    <option>Angola</option>
+                    <option>Anguilla</option>
+                    <option>Antigua and Barbuda</option>
+                    <option>Argentina</option>
+                    <option>Armenia</option>
+                    <option>Aruba</option>
+                    <option>Australia</option>
+                    <option>Austria</option>
+                    <option>Azerbaijan</option>
+                    <option>Bahamas</option>
+                    <option>Bahrain</option>
+                    <option>Bangladesh</option>
+                    <option>Barbados</option>
+                    <option>Belarus</option>
+                    <option>Belgium</option>
+                    <option>Belize</option>
+                    <option>Benin</option>
+                    <option>Bermuda</option>
+                    <option>Bhutan</option>
+                    <option>Bolivia</option>
+                    <option>Bonaire</option>
+                    <option>Bosnia and Herzegovina</option>
+                    <option>Botswana</option>
+                    <option>Brazil</option>
+                    <option>British Virgin Islands</option>
+                    <option>Brunei</option>
+                    <option>Bulgaria</option>
+                    <option>Burkina Faso</option>
+                    <option>Burma (Myanmar)</option>
+                    <option>Burundi</option>
+                    <option>Cambodia</option>
+                    <option>Cameroon</option>
+                    <option>Canada</option>
+                    <option>Cape Verde</option>
+                    <option>Cayman Islands</option>
+                    <option>Central African Republic</option>
+                    <option>Chad</option>
+                    <option>Chile</option>
+                    <option>China (People’s Republic of)</option>
+                    <option>Colombia</option>
+                    <option>Comoros Island</option>
+                    <option>Congo</option>
+                    <option>Costa Rica</option>
+                    <option>Côte d’Ivoire</option>
+                    <option>Croatia</option>
+                    <option>Cuba</option>
+                    <option>Curaçao</option>
+                    <option>Cyprus</option>
+                    <option>Czech Republic</option>
+                    <option>Democratic Republic of the Congo</option>
+                    <option>Denmark</option>
+                    <option>Djibouti</option>
+                    <option>Dominica</option>
+                    <option>Dominican Republic</option>
+                    <option>Ecuador</option>
+                    <option>Egypt</option>
+                    <option>El Salvador</option>
+                    <option>Equatorial Guinea</option>
+                    <option>Eritrea</option>
+                    <option>Estonia</option>
+                    <option>Ethiopia</option>
+                    <option>Fiji</option>
+                    <option>Finland</option>
+                    <option>France</option>
+                    <option>Gabon</option>
+                    <option>Gambia</option>
+                    <option>Georgia</option>
+                    <option>Germany</option>
+                    <option>Ghana</option>
+                    <option>Greece</option>
+                    <option>Grenada</option>
+                    <option>Guatemala</option>
+                    <option>Guinea</option>
+                    <option>Guinea-Bissau</option>
+                    <option>Guyana</option>
+                    <option>Haiti</option>
+                    <option>Holy See</option>
+                    <option>Honduras</option>
+                    <option>Hong Kong</option>
+                    <option>Hungary</option>
+                    <option>Iceland</option>
+                    <option>India</option>
+                    <option>Indonesia</option>
+                    <option>Iran</option>
+                    <option>Iraq</option>
+                    <option>Ireland</option>
+                    <option>Israel</option>
+                    <option>Italy</option>
+                    <option>Jamaica</option>
+                    <option>Japan</option>
+                    <option>Jordan</option>
+                    <option>Kazakhstan</option>
+                    <option>Kenya</option>
+                    <option>Kiribati</option>
+                    <option>Kosovo</option>
+                    <option>Kuwait</option>
+                    <option>Kyrgyzstan</option>
+                    <option>Laos</option>
+                    <option>Latvia</option>
+                    <option>Lebanon</option>
+                    <option>Lesotho</option>
+                    <option>Liberia</option>
+                    <option>Libya</option>
+                    <option>Liechtenstein</option>
+                    <option>Lithuania</option>
+                    <option>Luxembourg</option>
+                    <option>Macao</option>
+                    <option>Madagascar</option>
+                    <option>Malawi</option>
+                    <option>Malaysia</option>
+                    <option>Maldives</option>
+                    <option>Mali</option>
+                    <option>Malta</option>
+                    <option>Marshall Islands</option>
+                    <option>Martinique</option>
+                    <option>Mauritania</option>
+                    <option>Mauritius</option>
+                    <option>Mexico</option>
+                    <option>Micronesia</option>
+                    <option>Moldova</option>
+                    <option>Monaco</option>
+                    <option>Mongolia</option>
+                    <option>Montenegro</option>
+                    <option>Morocco</option>
+                    <option>Mozambique</option>
+                    <option>Namibia</option>
+                    <option>Nauru</option>
+                    <option>Nepal</option>
+                    <option>Netherlands</option>
+                    <option>New Caledonia</option>
+                    <option>New Zealand</option>
+                    <option>Nicaragua</option>
+                    <option>Niger</option>
+                    <option>Nigeria</option>
+                    <option>North Korea</option>
+                    <option>North Macedonia (Republic of)</option>
+                    <option>Norway</option>
+                    <option>Oman</option>
+                    <option>Pakistan</option>
+                    <option>Palestinian Authority (Gaza)</option>
+                    <option>Palestinian Authority (West Bank)</option>
+                    <option>Panama</option>
+                    <option>Papua New Guinea</option>
+                    <option>Paraguay</option>
+                    <option>Peru</option>
+                    <option>Philippines</option>
+                    <option>Poland</option>
+                    <option>Portugal</option>
+                    <option>Puerto Rico</option>
+                    <option>Qatar</option>
+                    <option>Romania</option>
+                    <option>Russia</option>
+                    <option>Rwanda</option>
+                    <option>Samoa</option>
+                    <option>San Marino</option>
+                    <option>Sao Tome and Principe</option>
+                    <option>Saudi Arabia</option>
+                    <option>Senegal</option>
+                    <option>Serbia</option>
+                    <option>Seychelles</option>
+                    <option>Sierra Leone</option>
+                    <option>Singapore</option>
+                    <option>Slovakia</option>
+                    <option>Slovenia</option>
+                    <option>Solomon Islands</option>
+                    <option>Somalia</option>
+                    <option>South Africa</option>
+                    <option>South Korea</option>
+                    <option>South Sudan</option>
+                    <option>Spain</option>
+                    <option>Sri Lanka</option>
+                    <option>St. Kitts and Nevis</option>
+                    <option>St. Lucia</option>
+                    <option>St. Vincent and the Grenadines</option>
+                    <option>Sudan</option>
+                    <option>Suriname</option>
+                    <option>Eswatini</option>
+                    <option>Sweden</option>
+                    <option>Switzerland</option>
+                    <option>Syria</option>
+                    <option>Tahiti</option>
+                    <option>Taiwan (Republic of China)</option>
+                    <option>Tajikistan</option>
+                    <option>Tanzania</option>
+                    <option>Thailand</option>
+                    <option>Timor-Leste (Timor oriental)</option>
+                    <option>Togo</option>
+                    <option>Tonga</option>
+                    <option>Trinidad and Tobago</option>
+                    <option>Tunisia</option>
+                    <option>Türkiye</option>
+                    <option>Turkmenistan</option>
+                    <option>Turks and Caicos Islands</option>
+                    <option>Tuvalu</option>
+                    <option>Uganda</option>
+                    <option>Ukraine</option>
+                    <option>United Arab Emirates</option>
+                    <option>United Kingdom</option>
+                    <option>United States of America</option>
+                    <option>Uruguay</option>
+                    <option>US Virgin Islands</option>
+                    <option>Uzbekistan</option>
+                    <option>Vanuatu</option>
+                    <option>Venezuela</option>
+                    <option>Vietnam</option>
+                    <option>Yemen</option>
+                    <option>Zambia</option>
+                    <option>Zimbabwe</option>
+                </select>
                 <label for="password"><b>Password</b></label>
                 <input type="password" placeholder="Enter Password" name="password" id="password">
                 <label for="confirmpassword"><b>Confirm Password</b></label>
@@ -162,10 +397,13 @@
             const ConfirmPassword = $('#confirmpassword').val()
             const FirstName = $('#firstname').val()
             const LastName = $('#lastname').val()
+            const Province = $('#province').val()
+            const City = $('#city').val()
+            const Country = $('#country').val()
 
-            if (Email !== '' && Mobile !== '' && Password !== '' && ConfirmPassword !== '' && FirstName !== '' && LastName) {
+            if (Email !== '' && Mobile !== '' && Password !== '' && ConfirmPassword !== '' && FirstName !== '' && LastName !== '' && Province !== '' && City !== '' && Country !== '') {
                 if (!String(Email).toLowerCase().match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-                    alert('Invalid EmailID !!!!');   
+                    alert('Invalid EmailID !!!!');
                 } else if (!String(Mobile).match(/^\d{10}$/)) {
                     alert('Invalid Mobile Number !!!!');
                 } else if (Password !== ConfirmPassword) {
@@ -177,6 +415,13 @@
             } else {
                 alert('Please enter all details to proceed further !!!')
             }
+        }
+
+        function fetchcities(event) {
+            fetch('JSON/cities.json').then((response) => response.json()).then((cities) => {
+                const citylist = cities.filter((cityObj) => cityObj[1] === event.target.value).map((cityObj) =>  `<option value="${cityObj[0]}">${cityObj[0]}</option>`)
+                $('#city').html(citylist)
+            })
         }
     </script>
 </body>
