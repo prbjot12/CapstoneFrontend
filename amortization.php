@@ -181,6 +181,7 @@ $results = $connection->get_vehicles();
                 </div>
                 <button class="cta-btn" onclick="window.location.reload()">Get a new Amortization</button>
             </form>
+            <button class="cta-btn" onclick="GeneratePDF()">Generate Summary/Invoice</button>
         </div>
     </div>
 
@@ -248,10 +249,10 @@ $results = $connection->get_vehicles();
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
     <script>
         window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
     </script>
-
     <script src="js/vendor/bootstrap.min.js"></script>
     <script src="js/datepicker.js"></script>
     <script src="js/plugins.js"></script>
@@ -496,6 +497,56 @@ $results = $connection->get_vehicles();
             //returns the concatenated string to the page
             $('#amortizationtable').html(result)
             $('#amortization').DataTable();
+        }
+
+        function GeneratePDF() {
+            var pdf = new jsPDF();
+            pdf.text("Amortization Summary", 70, 10);
+
+            pdf.text("Loan Amount: " + $('#quotationdetails_loanamount').html(), 10, 20);
+            pdf.text("Interest rate: " + $('#quotationdetails_interestrate').html(), 10, 30);
+            pdf.text("Number of months: " + $('#quotationdetails_numberofmonths').html(), 10, 40);
+            pdf.text("Monthly payment: " + $('#quotationdetails_monthlypayment').html(), 10, 50);
+            pdf.text("Total paid: " + $('#quotationdetails_totalpaid').html(), 10, 60);
+
+            var balance = parseFloat($('#quotationdetails_loanamount').html().split('$')[1].trim())
+            var interestRate = parseFloat($('#quotationdetails_interestrate').html() / 100.0)
+            var terms = parseInt($('#quotationdetails_numberofmonths').html())
+            var monthlyPayment = parseFloat($('#quotationdetails_monthlypayment').html())
+            var totalPaid = parseFloat($('#quotationdetails_totalpaid').html())
+
+            var monthlyRate = interestRate / 12;
+            var payment = balance * (monthlyRate / (1 - Math.pow(1 + monthlyRate, -terms)));
+
+            pdf.text("Month", 20, 80);
+            pdf.text("Balance", 70, 80);
+            pdf.text("Interest", 120, 80);
+            pdf.text("Principal", 170, 80);
+
+            var linecount = 90
+            for (var count = 0; count < terms; ++count) {
+                //in-loop interest amount holder
+                var interest = 0;
+
+                //in-loop monthly principal amount holder
+                var monthlyPrincipal = 0;
+
+                pdf.text((count + 1).toString(), 20, linecount);
+
+                pdf.text("$" + balance.toFixed(2), 70, linecount);
+                //calc the in-loop interest amount and display
+                interest = balance * monthlyRate;
+                pdf.text("$" + interest.toFixed(2), 120, linecount);
+
+                //calc the in-loop monthly principal and display
+                monthlyPrincipal = payment - interest;
+                pdf.text("$" + monthlyPrincipal.toFixed(2), 170, linecount);
+                //update the balance for each loop iteration
+                balance = balance - monthlyPrincipal;
+                linecount = linecount + 10;
+
+            }
+            pdf.save("amortizationsummary.pdf");
         }
     </script>
 </body>
