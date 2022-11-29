@@ -70,6 +70,7 @@ $results = $connection->get_vehicles();
     <table id="vehicleInventory" class="display" style="width:100%">
         <thead>
             <tr>
+                <th>Action</th>
                 <th>Brand</th>
                 <th>VehicleType</th>
                 <th>Model</th>
@@ -85,7 +86,8 @@ $results = $connection->get_vehicles();
             while ($row = mysqli_fetch_array($results, MYSQLI_ASSOC)) {
                 $sr_no++;
                 $str_to_print = "";
-                $str_to_print .= "<tr><td>{$row['Brand']}</td>";
+                $str_to_print .= "<tr><td class='actioncell'> <a class='appButton' href='editvehicle.php?vehicleid={$row['Vehicle_Id']}'>Edit</a> <a class='appButton' href='deletevehicle.php?vehicleid={$row['Vehicle_Id']}'>Delete</a></td>";
+                $str_to_print .= "<td>{$row['Brand']}</td>";
                 $str_to_print .= "<td>{$row['Vehicle_Type']}</td>";
                 $str_to_print .= "<td>{$row['Model']}</td>";
                 $str_to_print .= "<td>$ {$row['Price']}</td>";
