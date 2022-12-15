@@ -165,3 +165,20 @@ input[type="date"] {
 #quotationdetails, #quotationsummary {
   display: none;
 }
+
+.aidownloadimage {
+  background-color: #4545b9;
+  height: 40px;
+  display: block;
+  width: 125px;
+  text-align: center;
+  color: #fff;
+  padding-top: 10px;
+  border-radius: 4px;
+  margin: 25px auto;
+}
+
+.paypalpayment {
+  height: 20px;
+  margin-left: 15px;
+}

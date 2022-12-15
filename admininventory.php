@@ -5,7 +5,7 @@ $results = $connection->get_vehicles();
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -42,7 +42,13 @@ $results = $connection->get_vehicles();
                         <nav id="primary-nav" class="dropdown cf">
                             <ul class="dropdown menu">
                                 <li><a href="index.php">Home</a></li>
-                                <li><a href="vinreport.php">VIN Checker</a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Checker<span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="vinreport.php">VIN Checker</a></li>
+                                        <li><a href="vehiclechecker.php">Vehicle Image Checker</a></li>
+                                    </ul>
+                                </li>
                                 <li>
                                     <a href="about-us.php">About</a>
                                 </li>
@@ -64,6 +70,7 @@ $results = $connection->get_vehicles();
         </header>
     </div>
     <h1 style="text-align:center;">Vehicle Inventory</h1>
+    <h2 style="text-align:center;">Admin vehicle list</h2>
     <div class="buttonWrapper">
         <a class="appButton" href="addnewvehicles.php">Add New Vehicle</a>
     </div>
@@ -93,7 +100,7 @@ $results = $connection->get_vehicles();
                 $str_to_print .= "<td>$ {$row['Price']}</td>";
                 $str_to_print .= "<td>{$row['ManufactureDate']}</td>";
                 $str_to_print .= "<td><div style='background-color: {$row['Color']};' title='car color'>&nbsp;</div></td>";
-                $str_to_print .= "<td><img style='height:150px;width:150px;' src='{$row['VehicleImage']}' class='productImg'/></td></tr>";
+                $str_to_print .= "<td><img style='height:150px;width:150px;' alt='Car - {$row['Brand']}' src='{$row['VehicleImage']}' class='productImg'/></td></tr>";
                 echo $str_to_print;
             }
             ?>
@@ -117,36 +124,29 @@ $results = $connection->get_vehicles();
                         <div class="logo">
                             Wheels on Deals
                         </div>
-                        <p>Mauris sit amet quam congue, pulvinar urna et, congue diam. Suspendisse eu lorem massa. Integer sit amet posuere tellustea dictumst.</p>
-                        <ul class="social-icons">
-                            <li>
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                        </ul>
+                        <p style="color: #000;">Mauris sit amet quam congue, pulvinar urna et, congue diam. Suspendisse eu lorem massa. Integer sit amet posuere tellustea dictumst.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="useful-links">
                         <div class="footer-heading">
-                            <h4>Useful Links</h4>
+                            <h3>Useful Links</h3>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <ul>
-                                    <li><a href="inde.html"><i class="fa fa-stop"></i>Home</a></li>
-                                    <li><a href="about.html"><i class="fa fa-stop"></i>About</a></li>
-                                    <li><a href="team.html"><i class="fa fa-stop"></i>Team</a></li>
-                                    <li><a href="contact.html"><i class="fa fa-stop"></i>Contact Us</a></li>
+                                    <li><a style="color: #000;" href="inde.html"><i class="fa fa-stop"></i>Home</a></li>
+                                    <li><a style="color: #000;" href="about.html"><i class="fa fa-stop"></i>About</a></li>
+                                    <li><a style="color: #000;" href="team.html"><i class="fa fa-stop"></i>Team</a></li>
+                                    <li><a style="color: #000;" href="contact.html"><i class="fa fa-stop"></i>Contact Us</a></li>
                                 </ul>
                             </div>
                             <div class="col-md-6">
                                 <ul>
-                                    <li><a href="faq.html"><i class="fa fa-stop"></i>FAQ</a></li>
-                                    <li><a href="testimonials.html"><i class="fa fa-stop"></i>Testimonials</a></li>
-                                    <li><a href="blog.html"><i class="fa fa-stop"></i>Blog</a></li>
-                                    <li><a href="terms.html"><i class="fa fa-stop"></i>Terms</a></li>
+                                    <li><a style="color: #000;" href="faq.html"><i class="fa fa-stop"></i>FAQ</a></li>
+                                    <li><a style="color: #000;" href="testimonials.html"><i class="fa fa-stop"></i>Testimonials</a></li>
+                                    <li><a style="color: #000;" href="blog.html"><i class="fa fa-stop"></i>Blog</a></li>
+                                    <li><a style="color: #000;" href="terms.html"><i class="fa fa-stop"></i>Terms</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -155,12 +155,12 @@ $results = $connection->get_vehicles();
                 <div class="col-md-3">
                     <div class="contact-info">
                         <div class="footer-heading">
-                            <h4>Contact Information</h4>
+                            <h3>Contact Information</h3>
                         </div>
-                        <p><i class="fa fa-map-marker"></i> 212 Barrington Court New York, ABC</p>
+                        <p style="color: #000;"><i class="fa fa-map-marker"></i> 212 Barrington Court New York, ABC</p>
                         <ul>
-                            <li><span>Phone:</span><a href="#">+1 333 4040 5566</a></li>
-                            <li><span>Email:</span><a href="#">contact@company.com</a></li>
+                            <li><span style="color: #000;" >Phone:</span><a style="color: #000;" href="#">+1 333 4040 5566</a></li>
+                            <li><span style="color: #000;" >Email:</span><a style="color: #000;" href="#">contact@company.com</a></li>
                         </ul>
                     </div>
                 </div>
@@ -169,7 +169,7 @@ $results = $connection->get_vehicles();
     </footer>
 
     <div class="sub-footer">
-        <p>Copyright © 2022 Wheels On Deals <a href="#">Wheels On Deals</a></p>
+        <p style="color: #000;">Copyright © 2022 Wheels On Deals <a style="color: #000;" href="#">Wheels On Deals</a></p>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>

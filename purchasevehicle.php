@@ -26,7 +26,7 @@ if (!isset($_SESSION['customerlogin'])) {
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
     <meta charset="utf-8">
@@ -91,31 +91,33 @@ if (!isset($_SESSION['customerlogin'])) {
             </div>
         </header>
     </div>
+    <h1 class="title">Purchase Vehicle</h1>
+    <h2 class="title">Enter Vehicle Details</h2>
     <div class="addnewcard" id="paymentcard">
         <form action="saveappointment.php" method="post" id="bookappointment" enctype="multipart/form-data">
-            <h3 class="title">Purchase Vehicle</h3>
+            
             <div class="email-login">
-                <label for="customeremail"><b>Customer Email</b></label>
+                <label for="customeremail" style="color: #000"><b>Customer Email</b></label>
                 <input type="text" placeholder="Enter Customer Email" name="customeremail" id="customeremail" disabled value='<?php if (isset($customeremail)) echo $customeremail; ?>'>
             </div>
             <div class="email-login">
-                <label for="customernumber"><b>Customer Phone Number</b></label>
+                <label for="customernumber" style="color: #000"><b>Customer Phone Number</b></label>
                 <input type="text" placeholder="Enter Phone Number" name="customernumber" id="customernumber" disabled value='<?php if (isset($customerphonenumber)) echo $customerphonenumber; ?>'>
             </div>
             <div class="email-login">
-                <label for="customerfirstname"><b>Customer First Name</b></label>
+                <label for="customerfirstname" style="color: #000"><b>Customer First Name</b></label>
                 <input type="text" placeholder="Enter First Name" name="customerfirstname" id="customerfirstname" disabled value='<?php if (isset($customerfirstname)) echo $customerfirstname; ?>'>
             </div>
             <div class="email-login">
-                <label for="customerlastname"><b>Customer Last Name</b></label>
+                <label for="customerlastname" style="color: #000"><b>Customer Last Name</b></label>
                 <input type="text" placeholder="Enter Last Name" name="customerlastname" id="customerlastname" disabled value='<?php if (isset($customerlastname)) echo $customerlastname; ?>'>
             </div>
             <div class="email-login">
-                <label for="price"><b>Price</b></label>
+                <label for="price" style="color: #000"><b>Price</b></label>
                 <input type="text" placeholder="Enter Price" name="price" id="price" value='<?php if (isset($vehiclePrice)) echo $vehiclePrice; ?>'>
             </div>
             <div class="email-login">
-                <label for="Vehicle"><b>Vehicle</b></label>
+                <label for="Vehicle" style="color: #000"><b>Vehicle</b></label>
                 <select id="Vehicle" name="Vehicle">
                     <?php
                     $sr_no = 0;
@@ -190,36 +192,29 @@ if (!isset($_SESSION['customerlogin'])) {
                         <div class="logo">
                             Wheels on Deals
                         </div>
-                        <p>Mauris sit amet quam congue, pulvinar urna et, congue diam. Suspendisse eu lorem massa. Integer sit amet posuere tellustea dictumst.</p>
-                        <ul class="social-icons">
-                            <li>
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                        </ul>
+                        <p style="color: #000;">Mauris sit amet quam congue, pulvinar urna et, congue diam. Suspendisse eu lorem massa. Integer sit amet posuere tellustea dictumst.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="useful-links">
                         <div class="footer-heading">
-                            <h4>Useful Links</h4>
+                            <h3>Useful Links</h3>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <ul>
-                                    <li><a href="inde.html"><i class="fa fa-stop"></i>Home</a></li>
-                                    <li><a href="about.html"><i class="fa fa-stop"></i>About</a></li>
-                                    <li><a href="team.html"><i class="fa fa-stop"></i>Team</a></li>
-                                    <li><a href="contact.html"><i class="fa fa-stop"></i>Contact Us</a></li>
+                                    <li><a style="color: #000;" href="inde.html"><i class="fa fa-stop"></i>Home</a></li>
+                                    <li><a style="color: #000;" href="about.html"><i class="fa fa-stop"></i>About</a></li>
+                                    <li><a style="color: #000;" href="team.html"><i class="fa fa-stop"></i>Team</a></li>
+                                    <li><a style="color: #000;" href="contact.html"><i class="fa fa-stop"></i>Contact Us</a></li>
                                 </ul>
                             </div>
                             <div class="col-md-6">
                                 <ul>
-                                    <li><a href="faq.html"><i class="fa fa-stop"></i>FAQ</a></li>
-                                    <li><a href="testimonials.html"><i class="fa fa-stop"></i>Testimonials</a></li>
-                                    <li><a href="blog.html"><i class="fa fa-stop"></i>Blog</a></li>
-                                    <li><a href="terms.html"><i class="fa fa-stop"></i>Terms</a></li>
+                                    <li><a style="color: #000;" href="faq.html"><i class="fa fa-stop"></i>FAQ</a></li>
+                                    <li><a style="color: #000;" href="testimonials.html"><i class="fa fa-stop"></i>Testimonials</a></li>
+                                    <li><a style="color: #000;" href="blog.html"><i class="fa fa-stop"></i>Blog</a></li>
+                                    <li><a style="color: #000;" href="terms.html"><i class="fa fa-stop"></i>Terms</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -228,12 +223,12 @@ if (!isset($_SESSION['customerlogin'])) {
                 <div class="col-md-3">
                     <div class="contact-info">
                         <div class="footer-heading">
-                            <h4>Contact Information</h4>
+                            <h3>Contact Information</h3>
                         </div>
-                        <p><i class="fa fa-map-marker"></i> 212 Barrington Court New York, ABC</p>
+                        <p style="color: #000;"><i class="fa fa-map-marker"></i> 212 Barrington Court New York, ABC</p>
                         <ul>
-                            <li><span>Phone:</span><a href="#">+1 333 4040 5566</a></li>
-                            <li><span>Email:</span><a href="#">contact@company.com</a></li>
+                            <li><span style="color: #000;" >Phone:</span><a style="color: #000;" href="#">+1 333 4040 5566</a></li>
+                            <li><span style="color: #000;" >Email:</span><a style="color: #000;" href="#">contact@company.com</a></li>
                         </ul>
                     </div>
                 </div>
@@ -242,7 +237,7 @@ if (!isset($_SESSION['customerlogin'])) {
     </footer>
 
     <div class="sub-footer">
-        <p>Copyright © 2022 Wheels On Deals <a href="#">Wheels On Deals</a></p>
+        <p style="color: #000;">Copyright © 2022 Wheels On Deals <a style="color: #000;" href="#">Wheels On Deals</a></p>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>

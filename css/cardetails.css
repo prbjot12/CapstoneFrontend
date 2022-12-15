@@ -58,7 +58,7 @@ footer {
 .bookvehicle {
     background-color: #d44457;
     border: 0;
-    color: #fff;
+    color: #000 !important;
     height: 40px;
     width: 150px;
     display: block;

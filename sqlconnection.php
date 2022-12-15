@@ -2,9 +2,9 @@
 class DatabaseConnection
 {
 
-    const DB_USER = '';
+    const DB_USER = 'root';
     const DB_PASSWORD = '';
-    const DB_HOST = 'localhost';
+    const DB_HOST = 'localhost:3306';
     const DB_NAME = 'WHEELSONDEALS';
 
     private $dbc;
@@ -288,6 +288,30 @@ class DatabaseConnection
             $vehicleid_clean
         );
         $result = mysqli_stmt_execute($deletestmt);
+        return $result;
+    }
+
+    function create_order($CustomerID,  $Vehicleid, $Paymentid, $Vehicleprice)
+    {
+
+        $customerid_clean = $this->prepare_string($CustomerID);
+        $vehicleid_clean = $this->prepare_string($Vehicleid);
+        $paymentid_clean = $this->prepare_string($Paymentid);
+        $vehicleprice_clean = $this->prepare_string($Vehicleprice);
+
+        $query = "INSERT INTO VehicleOrders (Customer_Id, Vehicle_Id, PaymentID, VehiclePrice) VALUES (?, ?, ?, ?)";
+
+        $stmt = mysqli_prepare($this->dbc, $query);
+
+        mysqli_stmt_bind_param(
+            $stmt,
+            'ssss',
+            $customerid_clean,
+            $vehicleid_clean,
+            $paymentid_clean,
+            $vehicleprice_clean
+        );
+        $result = mysqli_stmt_execute($stmt);
         return $result;
     }
 }
