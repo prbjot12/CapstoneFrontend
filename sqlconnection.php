@@ -2,10 +2,10 @@
 class DatabaseConnection
 {
 
-    const DB_USER = 'root';
-    const DB_PASSWORD = '';
-    const DB_HOST = 'localhost:3306';
-    const DB_NAME = 'WHEELSONDEALS';
+    const DB_USER = 'b149565dd5687f';
+    const DB_PASSWORD = '395c7342';
+    const DB_HOST = 'us-cdbr-east-06.cleardb.net';
+    const DB_NAME = 'heroku_3530b2820ea7c97';
 
     private $dbc;
 
